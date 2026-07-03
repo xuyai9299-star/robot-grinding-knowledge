@@ -1,0 +1,874 @@
+{
+  "timeline": [
+    {
+      "year": 1988,
+      "paper_count": 2,
+      "top_directions": [
+        {
+          "name": "力控制",
+          "count": 2
+        },
+        {
+          "name": "机器人加工",
+          "count": 2
+        },
+        {
+          "name": "理论建模",
+          "count": 1
+        },
+        {
+          "name": "智能制造",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1990,
+      "paper_count": 1,
+      "top_directions": [
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1991,
+      "paper_count": 2,
+      "top_directions": []
+    },
+    {
+      "year": 1992,
+      "paper_count": 3,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 2
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1993,
+      "paper_count": 1,
+      "top_directions": [
+        {
+          "name": "叶片加工",
+          "count": 1
+        },
+        {
+          "name": "涡轮部件",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1995,
+      "paper_count": 1,
+      "top_directions": [
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1997,
+      "paper_count": 2,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 1999,
+      "paper_count": 2,
+      "top_directions": [
+        {
+          "name": "理论建模",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2000,
+      "paper_count": 1,
+      "top_directions": []
+    },
+    {
+      "year": 2001,
+      "paper_count": 2,
+      "top_directions": [
+        {
+          "name": "理论建模",
+          "count": 2
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2002,
+      "paper_count": 1,
+      "top_directions": []
+    },
+    {
+      "year": 2003,
+      "paper_count": 4,
+      "top_directions": [
+        {
+          "name": "激光加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2004,
+      "paper_count": 3,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 2
+        },
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "传感器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2005,
+      "paper_count": 3,
+      "top_directions": [
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "传感器",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2006,
+      "paper_count": 4,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 2
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        },
+        {
+          "name": "路径规划",
+          "count": 1
+        },
+        {
+          "name": "仿真",
+          "count": 1
+        },
+        {
+          "name": "理论建模",
+          "count": 1
+        },
+        {
+          "name": "传感器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2007,
+      "paper_count": 2,
+      "top_directions": []
+    },
+    {
+      "year": 2008,
+      "paper_count": 6,
+      "top_directions": [
+        {
+          "name": "表面质量",
+          "count": 1
+        },
+        {
+          "name": "表面完整性",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2009,
+      "paper_count": 9,
+      "top_directions": [
+        {
+          "name": "理论建模",
+          "count": 2
+        },
+        {
+          "name": "表面质量",
+          "count": 1
+        },
+        {
+          "name": "钛合金加工",
+          "count": 1
+        },
+        {
+          "name": "表面完整性",
+          "count": 1
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        },
+        {
+          "name": "陶瓷加工",
+          "count": 1
+        },
+        {
+          "name": "传感器",
+          "count": 1
+        },
+        {
+          "name": "叶片加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2010,
+      "paper_count": 5,
+      "top_directions": [
+        {
+          "name": "理论建模",
+          "count": 3
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        },
+        {
+          "name": "仿真",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2011,
+      "paper_count": 11,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 6
+        },
+        {
+          "name": "理论建模",
+          "count": 3
+        },
+        {
+          "name": "表面质量",
+          "count": 2
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        },
+        {
+          "name": "磨损监测",
+          "count": 1
+        },
+        {
+          "name": "路径规划",
+          "count": 1
+        },
+        {
+          "name": "工艺优化",
+          "count": 1
+        },
+        {
+          "name": "表面完整性",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2012,
+      "paper_count": 7,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 3
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        },
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "复合材料",
+          "count": 1
+        },
+        {
+          "name": "路径规划",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2013,
+      "paper_count": 9,
+      "top_directions": [
+        {
+          "name": "力控制",
+          "count": 1
+        },
+        {
+          "name": "机器人加工",
+          "count": 1
+        },
+        {
+          "name": "表面质量",
+          "count": 1
+        },
+        {
+          "name": "表面完整性",
+          "count": 1
+        },
+        {
+          "name": "钛合金加工",
+          "count": 1
+        },
+        {
+          "name": "增材制造",
+          "count": 1
+        },
+        {
+          "name": "激光加工",
+          "count": 1
+        },
+        {
+          "name": "叶片加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2014,
+      "paper_count": 11,
+      "top_directions": [
+        {
+          "name": "叶片加工",
+          "count": 4
+        },
+        {
+          "name": "涡轮部件",
+          "count": 4
+        },
+        {
+          "name": "机器人加工",
+          "count": 3
+        },
+        {
+          "name": "航空发动机",
+          "count": 3
+        },
+        {
+          "name": "高温合金",
+          "count": 3
+        },
+        {
+          "name": "材料去除机理",
+          "count": 1
+        },
+        {
+          "name": "理论建模",
+          "count": 1
+        },
+        {
+          "name": "激光加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2015,
+      "paper_count": 24,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 6
+        },
+        {
+          "name": "叶片加工",
+          "count": 5
+        },
+        {
+          "name": "理论建模",
+          "count": 4
+        },
+        {
+          "name": "表面质量",
+          "count": 3
+        },
+        {
+          "name": "力控制",
+          "count": 3
+        },
+        {
+          "name": "力建模",
+          "count": 2
+        },
+        {
+          "name": "钛合金加工",
+          "count": 2
+        },
+        {
+          "name": "整体叶盘",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "year": 2016,
+      "paper_count": 19,
+      "top_directions": [
+        {
+          "name": "理论建模",
+          "count": 4
+        },
+        {
+          "name": "叶片加工",
+          "count": 4
+        },
+        {
+          "name": "预测建模",
+          "count": 3
+        },
+        {
+          "name": "材料去除机理",
+          "count": 2
+        },
+        {
+          "name": "磨损监测",
+          "count": 2
+        },
+        {
+          "name": "表面质量",
+          "count": 1
+        },
+        {
+          "name": "增材制造",
+          "count": 1
+        },
+        {
+          "name": "陶瓷加工",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "paper_count": 31,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 9
+        },
+        {
+          "name": "叶片加工",
+          "count": 7
+        },
+        {
+          "name": "标定与测量",
+          "count": 5
+        },
+        {
+          "name": "表面质量",
+          "count": 5
+        },
+        {
+          "name": "涡轮部件",
+          "count": 4
+        },
+        {
+          "name": "理论建模",
+          "count": 4
+        },
+        {
+          "name": "激光加工",
+          "count": 3
+        },
+        {
+          "name": "航空发动机",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "paper_count": 36,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 10
+        },
+        {
+          "name": "理论建模",
+          "count": 8
+        },
+        {
+          "name": "表面质量",
+          "count": 6
+        },
+        {
+          "name": "叶片加工",
+          "count": 6
+        },
+        {
+          "name": "整体叶盘",
+          "count": 3
+        },
+        {
+          "name": "切削力",
+          "count": 2
+        },
+        {
+          "name": "力控制",
+          "count": 2
+        },
+        {
+          "name": "力建模",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "paper_count": 66,
+      "top_directions": [
+        {
+          "name": "叶片加工",
+          "count": 20
+        },
+        {
+          "name": "表面质量",
+          "count": 17
+        },
+        {
+          "name": "机器人加工",
+          "count": 17
+        },
+        {
+          "name": "理论建模",
+          "count": 14
+        },
+        {
+          "name": "航空发动机",
+          "count": 12
+        },
+        {
+          "name": "自适应控制",
+          "count": 9
+        },
+        {
+          "name": "钛合金加工",
+          "count": 8
+        },
+        {
+          "name": "整体叶盘",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "paper_count": 64,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 22
+        },
+        {
+          "name": "叶片加工",
+          "count": 15
+        },
+        {
+          "name": "表面质量",
+          "count": 10
+        },
+        {
+          "name": "理论建模",
+          "count": 10
+        },
+        {
+          "name": "磨损监测",
+          "count": 8
+        },
+        {
+          "name": "钛合金加工",
+          "count": 7
+        },
+        {
+          "name": "航空发动机",
+          "count": 6
+        },
+        {
+          "name": "材料去除机理",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "paper_count": 83,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 24
+        },
+        {
+          "name": "理论建模",
+          "count": 21
+        },
+        {
+          "name": "叶片加工",
+          "count": 16
+        },
+        {
+          "name": "磨损监测",
+          "count": 9
+        },
+        {
+          "name": "仿真",
+          "count": 6
+        },
+        {
+          "name": "力控制",
+          "count": 5
+        },
+        {
+          "name": "自适应控制",
+          "count": 5
+        },
+        {
+          "name": "航空发动机",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "paper_count": 100,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 28
+        },
+        {
+          "name": "叶片加工",
+          "count": 21
+        },
+        {
+          "name": "理论建模",
+          "count": 16
+        },
+        {
+          "name": "航空发动机",
+          "count": 14
+        },
+        {
+          "name": "表面质量",
+          "count": 11
+        },
+        {
+          "name": "表面完整性",
+          "count": 10
+        },
+        {
+          "name": "磨损监测",
+          "count": 10
+        },
+        {
+          "name": "钛合金加工",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "paper_count": 112,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 29
+        },
+        {
+          "name": "理论建模",
+          "count": 23
+        },
+        {
+          "name": "叶片加工",
+          "count": 12
+        },
+        {
+          "name": "表面质量",
+          "count": 9
+        },
+        {
+          "name": "磨损监测",
+          "count": 6
+        },
+        {
+          "name": "材料去除机理",
+          "count": 6
+        },
+        {
+          "name": "航空发动机",
+          "count": 6
+        },
+        {
+          "name": "钛合金加工",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "paper_count": 92,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 24
+        },
+        {
+          "name": "叶片加工",
+          "count": 20
+        },
+        {
+          "name": "理论建模",
+          "count": 15
+        },
+        {
+          "name": "磨损监测",
+          "count": 12
+        },
+        {
+          "name": "材料去除机理",
+          "count": 11
+        },
+        {
+          "name": "表面质量",
+          "count": 10
+        },
+        {
+          "name": "表面完整性",
+          "count": 9
+        },
+        {
+          "name": "预测建模",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "paper_count": 111,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 42
+        },
+        {
+          "name": "理论建模",
+          "count": 26
+        },
+        {
+          "name": "叶片加工",
+          "count": 24
+        },
+        {
+          "name": "磨损监测",
+          "count": 20
+        },
+        {
+          "name": "材料去除机理",
+          "count": 18
+        },
+        {
+          "name": "表面质量",
+          "count": 11
+        },
+        {
+          "name": "力控制",
+          "count": 10
+        },
+        {
+          "name": "轨迹规划",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "paper_count": 7,
+      "top_directions": [
+        {
+          "name": "机器人加工",
+          "count": 3
+        },
+        {
+          "name": "航空发动机",
+          "count": 2
+        },
+        {
+          "name": "叶片加工",
+          "count": 2
+        },
+        {
+          "name": "工艺优化",
+          "count": 2
+        },
+        {
+          "name": "理论建模",
+          "count": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>研究时间轴 — Dark Neural System</title>
+  <style>
+    :root{--bg:#050B1F;--card:rgba(255,255,255,0.03);--text:#e8eaed;--muted:#7c84a0;--accent:#3B82F6;--cyan:#22D3EE;--indigo:#6366F1;--green:#34d399;--border:rgba(255,255,255,0.08)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);overflow-x:hidden}
+    .hero{background:linear-gradient(135deg,#060f2b,#0f1b3b,#2563EB);color:#fff;padding:18px 20px;text-align:center;border-bottom:1px solid var(--border)}
+    .hero h1{font-size:1.15rem;margin:0 0 3px}
+    .hero p{opacity:.75;font-size:.75rem}
+    .hero a{color:var(--cyan);text-decoration:none;font-size:.73rem;display:inline-block;margin-top:4px;padding:4px 12px;border:1px solid rgba(34,211,238,0.2);border-radius:6px;transition:all 0.2s}
+    .hero a:hover{background:rgba(34,211,238,0.08)}
+    .overview{display:flex;gap:10px;justify-content:center;padding:12px;flex-wrap:wrap}
+    .ov-item{background:var(--card);border-radius:8px;padding:10px 18px;text-align:center;min-width:70px;border:1px solid var(--border)}
+    .ov-item .n{font-size:1.1rem;font-weight:700;color:var(--cyan)}
+    .ov-item .l{font-size:.65rem;color:var(--muted)}
+    .timeline-wrap{position:relative;padding:16px 0;overflow-x:auto;overflow-y:hidden;white-space:nowrap;min-height:420px;cursor:grab;-webkit-overflow-scrolling:touch}
+    .timeline-wrap:active{cursor:grabbing}
+    .timeline-wrap::-webkit-scrollbar{height:6px}
+    .timeline-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px}
+    .timeline-track{display:flex;gap:0;padding:0 60px;min-width:max-content}
+    .year-col{flex-shrink:0;width:180px;position:relative;padding:0 8px}
+    .year-col .year-badge{text-align:center;font-size:1.2rem;font-weight:800;color:var(--cyan);margin:0 0 4px;position:sticky;top:0;z-index:5;background:var(--bg);padding:4px 0}
+    .year-col .paper-count{text-align:center;font-size:.65rem;color:var(--muted);margin-bottom:8px}
+    .dir-card{display:block;white-space:normal;background:var(--card);border-radius:8px;padding:8px 10px;margin-bottom:6px;border-left:3px solid var(--accent);transition:all .15s;cursor:pointer;text-align:left;border:1px solid var(--border)}
+    .dir-card:hover{transform:translateX(3px);border-left-color:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,0.1)}
+    .dir-card .dn{font-size:.75rem;font-weight:600;color:var(--text);margin-bottom:1px}
+    .dir-card .dc{font-size:.62rem;color:var(--muted)}
+    .dir-card.new{border-left-color:var(--green)}
+    .dir-card.rising{border-left-color:var(--cyan)}
+    .dir-card.stable{border-left-color:var(--accent)}
+    .dir-card.declining{border-left-color:var(--indigo)}
+    .legend{display:flex;gap:16px;justify-content:center;padding:8px;flex-wrap:wrap;font-size:.68rem;color:var(--muted)}
+    .legend .dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+    .tip{text-align:center;color:var(--muted);font-size:.68rem;padding:6px}
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;justify-content:center;align-items:center}
+    .modal.on{display:flex}
+    .modal-box{background:#0a1030;border-radius:12px;padding:22px;max-width:520px;width:92%;max-height:72vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,.5);text-align:left;border:1px solid var(--border)}
+    .modal-box h3{color:var(--cyan);font-size:.95rem;margin-bottom:8px}
+    .modal-box .close-btn{float:right;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer}
+    .modal-box .paper-item{border-bottom:1px solid rgba(255,255,255,0.06);padding:7px 0;font-size:.73rem}
+    .modal-box .paper-item .pty{font-size:.63rem;color:var(--muted);margin-top:1px}
+    .modal-box .paper-item .plk{font-size:.6rem;margin-top:2px}
+    .modal-box .paper-item .plk a{color:var(--cyan);text-decoration:none}
+    .load{text-align:center;padding:60px;color:var(--muted)}
+    .err{color:#f87171;font-size:.8rem;margin-top:4px}
+    #bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5}
+  </style>
+</head>
+<body>
+<canvas id="bgParticles"></canvas>
+<div class="hero">
+  <h1>📈 研究时间轴</h1>
+  <p><a href="index.html">← 返回主页</a></p>
+</div>
+
+<div class="tip">← 拖拽或滚轮横向滑动 → | 🟢新兴 🟡上升 🔵稳定 🟣下降 | 点击卡片看论文</div>
+<div class="legend">
+  <span><span class="dot" style="background:#34d399"></span>新兴方向（近2年出现）</span>
+  <span><span class="dot" style="background:#22D3EE"></span>上升趋势（近3年增长）</span>
+  <span><span class="dot" style="background:#3B82F6"></span>持续稳定</span>
+  <span><span class="dot" style="background:#6366F1"></span>逐渐减少</span>
+</div>
+
+<div class="overview" id="overview"></div>
+
+<div class="timeline-wrap" id="timelineWrap">
+  <div class="timeline-track" id="timelineTrack"></div>
+</div>
+<div id="loading" class="load"><div>加载数据中…</div><div class="err" id="loadErr"></div></div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+(function(){
+  var conferencesData=null, papersIdx=null;
+
+  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+  var DIR_KW=[
+    {label:"表面质量",kw:["surface roughness","surface quality","surface integrity","surface texture","表面粗糙度","表面质量","表面完整性"]},
+    {label:"材料去除机理",kw:["material removal","material removal rate","chip thickness","removal depth","材料去除","去除率","切屑"]},
+    {label:"力位控制",kw:["force control","force model","force/position","hybrid force","impedance control","力控制","力/位","阻抗控制"]},
+    {label:"轨迹路径规划",kw:["tool path","trajectory planning","path planning","tool-path","轨迹规划","路径规划"]},
+    {label:"标定测量",kw:["calibration","measurement accuracy","tcp","laser scanner","标定","测量精度"]},
+    {label:"有限元仿真建模",kw:["finite element","simulation","fem","numerical","predict","model","有限元","仿真","数值","建模"]},
+    {label:"AI神经网络优化",kw:["neural network","deep learning","machine learning","ai","genetic algorithm","reinforcement","optimization","神经网络","深度学习","机器学习","优化"]},
+    {label:"残余应力",kw:["residual stress","残余应力"]},
+    {label:"砂带磨损监测",kw:["belt wear","condition monitoring","belt condition","wear stage","acoustic emission","磨损","状态监测","声发射"]},
+    {label:"钛合金加工",kw:["titanium alloy","titanium","ti-6al","tc4","tc17","钛合金"]},
+    {label:"高温合金",kw:["nickel","superalloy","inconcel","高温合金","镍基"]},
+    {label:"陶瓷复合材料",kw:["ceramic","composite","陶瓷","复合"]},
+    {label:"航空发动机叶片",kw:["aero-engine","blade","blisk","turbine","航空","叶片","涡轮","叶盘"]},
+    {label:"增材修复再制造",kw:["additive manufacturing","laser cladding","remanufacturing","增材","激光熔覆","再制造"]},
+    {label:"机器人柔顺加工",kw:["compliant","flexible","adaptive","elastic contact","柔顺","柔性","自适应","弹性接触"]},
+    {label:"数字孪生数据驱动",kw:["digital twin","data-driven","data driven","数字孪生","数据驱动"]},
+    {label:"超声辅助磨削",kw:["ultrasonic","ultrasonic-assisted","超声"]},
+  ];
+
+  function extractDirections(abstract, title){
+    var text=((abstract||"")+" "+(title||"")).toLowerCase();
+    var found=[];
+    DIR_KW.forEach(function(dk){
+      if(dk.kw.some(function(k){return text.indexOf(k.toLowerCase())>=0;})) found.push(dk.label);
+    });
+    return found;
+  }
+
+  function classifyTrend(dirName, yearIdx, timeline){
+    var apps=[];
+    timeline.forEach(function(yd,i){
+      var d=yd.top_directions.find(function(x){return x.name===dirName;});
+      if(d) apps.push({year:yd.year,count:d.count,idx:i});
+    });
+    if(!apps.length) return "stable";
+    var first=apps[0].idx, last=apps[apps.length-1].idx;
+    if(first>=timeline.length-2) return "new";
+    if(apps.length>=3){
+      var r=apps.slice(-3);
+      if(r[2].count>=r[1].count&&r[1].count>=r[0].count) return "rising";
+    }
+    if(last<timeline.length-3) return "declining";
+    return "stable";
+  }
+
+  function renderTimeline(){
+    var tl=conferencesData.timeline||[];
+    if(!tl.length) return;
+
+    var allDirs=new Set();
+    tl.forEach(function(yd){yd.top_directions.forEach(function(d){allDirs.add(d.name);});});
+    document.getElementById("overview").innerHTML=
+      '<div class="ov-item"><div class="n">'+tl.length+'</div><div class="l">年份跨度</div></div>'+
+      '<div class="ov-item"><div class="n">'+allDirs.size+'</div><div class="l">研究方向</div></div>'+
+      '<div class="ov-item"><div class="n">'+(conferencesData.total_papers||0)+'</div><div class="l">论文总数</div></div>';
+
+    var html="";
+    tl.forEach(function(yd){
+      html+='<div class="year-col"><div class="year-badge">'+yd.year+'</div><div class="paper-count">📄 '+yd.paper_count+' 篇</div>';
+      yd.top_directions.forEach(function(d){
+        var trend=classifyTrend(d.name, yd, tl);
+        html+='<div class="dir-card '+trend+'" data-dir="'+esc(d.name)+'" data-year="'+yd.year+'" data-count="'+d.count+'">'+
+          '<div class="dn">'+esc(d.name)+'</div><div class="dc">'+d.count+' 篇提及</div></div>';
+      });
+      html+='</div>';
+    });
+    document.getElementById("timelineTrack").innerHTML=html;
+    document.getElementById("loading").style.display="none";
+
+    var cols=document.querySelectorAll(".year-col");
+    if(cols.length){cols[cols.length-1].scrollIntoView({behavior:"smooth",inline:"center"});}
+
+    document.getElementById("timelineTrack").addEventListener("click",function(e){
+      var card=e.target.closest(".dir-card");
+      if(!card) return;
+      var dirName=card.dataset.dir;
+      var year=parseInt(card.dataset.year);
+      showPapers(dirName,year);
+    });
+  }
+
+  function showPapers(dirName, year){
+    var allPapers=[];
+    var allList=(conferencesData.conferences||[]).concat(conferencesData.journals||[]);
+    allList.forEach(function(venue){
+      (venue.papers||[]).forEach(function(p){
+        if(parseInt(p.year)!==year) return;
+        if((p.directions||[]).indexOf(dirName)<0) return;
+        allPapers.push({title:p.title, authors:p.authors, year:p.year, doi:p.doi, url:p.url});
+      });
+    });
+    var seen={};
+    allPapers=allPapers.filter(function(p){var k=p.title+p.year;if(seen[k]) return false; seen[k]=true; return true;});
+
+    var box=document.getElementById("modalBox");
+    box.innerHTML=
+      '<button class="close-btn" onclick="document.getElementById(\'modal\').classList.remove(\'on\')">✕</button>'+
+      '<h3>📌 '+esc(dirName)+' — '+year+'年</h3>'+
+      '<p style="color:var(--muted);font-size:.73rem;margin-bottom:10px">共 <b>'+allPapers.length+'</b> 篇相关论文</p>'+
+      '<div>'+(allPapers.length?allPapers.map(function(p){
+        var link=p.url||(p.doi?'https://doi.org/'+String(p.doi).replace(/^https?:\/\/(doi\.org\/)?/i,''):'');
+        return'<div class="paper-item"><b>'+esc(p.title)+'</b><div class="pty">📅 '+p.year+' · 👤 '+esc(p.authors)+'</div>'+
+          (link?'<div class="plk"><a href="'+esc(link)+'" target="_blank">📄 原文 ↗</a></div>':'')+'</div>';
+      }).join(""):'<div style="color:var(--muted);padding:20px;text-align:center">暂无收录论文</div>')+'</div>';
+    document.getElementById("modal").classList.add("on");
+  }
+
+  var wrap=document.getElementById("timelineWrap"),isDown=false,startX,scrollLeft;
+  wrap.addEventListener("mousedown",function(e){isDown=true;startX=e.pageX-wrap.offsetLeft;scrollLeft=wrap.scrollLeft;wrap.style.cursor="grabbing"});
+  wrap.addEventListener("mouseleave",function(){isDown=false;wrap.style.cursor="grab"});
+  wrap.addEventListener("mouseup",function(){isDown=false;wrap.style.cursor="grab"});
+  wrap.addEventListener("mousemove",function(e){if(!isDown)return;e.preventDefault();wrap.scrollLeft=scrollLeft-(e.pageX-wrap.offsetLeft-startX)*1.5});
+
+  Promise.all([
+    fetch("conferences/conferences.json",{cache:"no-store"}).then(function(r){return r.json();}),
+    fetch("papers_index.json",{cache:"no-store"}).then(function(r){return r.json();}),
+  ]).then(function(res){
+    conferencesData=res[0]; papersIdx=(res[1].by_id||res[1]||{});
+    renderTimeline();
+  }).catch(function(e){
+    document.getElementById("loadErr").textContent=esc(e.message);
+  });
+})();
+</script>
+<script>
+// ═══════════ PARTICLE SYSTEM v2.0 ═══════════
+(function(){var c=document.getElementById("bgParticles"),ctx=c.getContext("2d"),pts=[],mx=0,my=0,tmx=0,tmy=0;function rs(){c.width=window.innerWidth;c.height=window.innerHeight}rs();window.addEventListener("resize",rs);document.addEventListener("mousemove",function(e){tmx=e.clientX;tmy=e.clientY});mx=window.innerWidth/2;my=window.innerHeight/2;tmx=mx;tmy=my;var pal=[{r:59,g:130,b:246,a:0.6},{r:99,g:102,b:241,a:0.5},{r:34,g:211,b:238,a:0.4},{r:37,g:99,b:235,a:0.45}];for(var i=0;i<100;i++){var col=pal[Math.floor(Math.random()*pal.length)];pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,r:Math.random()*1.3+0.2,col:col,ox:Math.random()*c.width,oy:Math.random()*c.height})}function dr(){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;ctx.clearRect(0,0,c.width,c.height);for(var i=0;i<pts.length;i++){var p=pts[i];var dxm=p.x-mx,dym=p.y-my,dm=Math.sqrt(dxm*dxm+dym*dym);var parallax=dm<300?(1-dm/300)*0.1:0;var nx=dm>0.1?dxm/dm:0,ny=dm>0.1?dym/dm:0;p.vx+=nx*parallax*0.02;p.vy+=ny*parallax*0.02;p.vx*=0.999;p.vy*=0.999;p.vx+=(p.ox-p.x)*0.00003;p.vy+=(p.oy-p.y)*0.00003;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba("+p.col.r+","+p.col.g+","+p.col.b+","+p.col.a+")";ctx.fill()}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(79,130,210,"+(0.03*(1-dist/100))+")";ctx.lineWidth=0.25;ctx.stroke()}}}requestAnimationFrame(dr)}dr()})();
+</script>
+</body>
+</html>

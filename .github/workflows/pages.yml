@@ -1,0 +1,52 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "scripts/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Rebuild data (ensure JSON is fresh)
+        run: |
+          pip install -r requirements.txt 2>/dev/null || true
+          SKIP_LLM=1 python ingest.py --rebuild-only || true
+          # Copy output JSONs to web/
+          cp papers_index.json web/ 2>/dev/null || true
+          cp papers_classified.json web/ 2>/dev/null || true
+          cp mindmap_stats.json web/ 2>/dev/null || true
+          cp mindmaps_five.json web/ 2>/dev/null || true
+          cp papers_enriched_updated.json web/ 2>/dev/null || true
+          cp experiment_results.json web/ 2>/dev/null || true
+
+      - name: Prepare site from web/
+        run: |
+          mkdir -p _site
+          cp -r web/* _site/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

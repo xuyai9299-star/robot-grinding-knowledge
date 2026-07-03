@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>学术会议与期刊 — 机器人柔性磨削</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root{--bg:#f1f5f9;--card:#fff;--text:#1e293b;--muted:#64748b;--accent:#2563eb;--gold:#f59e0b;--green:#10b981;--purple:#8b5cf6}
+    *{box-sizing:border-box}
+    body{background:var(--bg);font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;margin:0}
+    .hero{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:20px 16px;text-align:center}
+    .hero h1{font-size:1.2rem;margin:0 0 4px}
+    .hero p{opacity:.75;font-size:.78rem;margin:0}
+    .hero a{color:#93c5fd;text-decoration:none;font-size:.75rem}
+    .container{max-width:1200px;margin:0 auto;padding:14px}
+    .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+    .stat-card{background:var(--card);border-radius:8px;padding:12px 18px;box-shadow:0 2px 6px rgba(0,0,0,.03);text-align:center;flex:1;min-width:80px}
+    .stat-card .num{font-size:1.3rem;font-weight:700;color:var(--accent)}
+    .stat-card .lbl{font-size:.68rem;color:var(--muted)}
+    /* Tab */
+    .tabs{display:flex;gap:0;margin-bottom:14px;border-bottom:2px solid #e2e8f0}
+    .tabs button{padding:8px 20px;border:none;background:none;font-size:.85rem;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+    .tabs button.on{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+    .tabs button .badge{background:#e2e8f0;color:var(--muted);font-size:.7rem;padding:1px 7px;border-radius:10px;margin-left:4px}
+    .tabs button.on .badge{background:#dbeafe;color:var(--accent)}
+    /* 搜索 */
+    .search-wrap{margin-bottom:12px}
+    .search-wrap input{width:100%;padding:9px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;outline:none;background:var(--card)}
+    .search-wrap input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.08)}
+    /* 卡片 */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:12px}
+    .vcard{background:var(--card);border-radius:10px;padding:16px;cursor:pointer;border:2px solid transparent;transition:all .2s;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+    .vcard:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(37,99,235,.1);transform:translateY(-1px)}
+    .vcard.on{border-color:var(--accent);background:#eff6ff}
+    .vcard .abbrev{font-size:1.05rem;font-weight:700;color:var(--accent)}
+    .vcard .fullname{font-size:.75rem;color:var(--muted);margin:1px 0 5px}
+    .vcard .meta{display:flex;gap:10px;flex-wrap:wrap;font-size:.7rem;color:var(--muted);margin-bottom:6px}
+    .vcard .trend-line{font-size:.7rem;color:var(--green);margin-bottom:4px}
+    .vcard .dirs{display:flex;flex-wrap:wrap;gap:3px}
+    .vcard .dirs .tag{background:#eff6ff;color:var(--accent);font-size:.65rem;padding:2px 7px;border-radius:4px}
+    /* 详情 */
+    .detail-wrap{display:none;margin-top:14px}
+    .detail-wrap.on{display:block}
+    .detail{background:var(--card);border-radius:10px;padding:22px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+    .detail .d-abbrev{font-size:1.4rem;font-weight:800;color:var(--accent)}
+    .detail h2{font-size:1.05rem;color:var(--text);margin:2px 0 6px}
+    .detail .d-meta{color:var(--muted);font-size:.78rem;margin-bottom:10px}
+    .detail .d-summary{background:#f8fafc;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:.8rem;color:#475569;border-left:3px solid var(--green)}
+    .trend{display:flex;gap:4px;align-items:flex-end;height:90px;margin:8px 0 18px}
+    .trend .bar{flex:1;min-width:20px;border-radius:3px 3px 0 0;position:relative;transition:height .3s}
+    .trend .bar .yr{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted)}
+    .trend .bar .cnt{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:.62rem;font-weight:600}
+    .paper-card{border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:6px;transition:all .12s}
+    .paper-card:hover{border-color:#93c5fd;background:#f8fafc}
+    .paper-card .pt{font-size:.8rem;font-weight:600;color:var(--accent);margin-bottom:2px}
+    .paper-card .pm{font-size:.68rem;color:var(--muted)}
+    .paper-card .pk{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+    .paper-card .pk .kw{background:#f1f5f9;color:#475569;font-size:.63rem;padding:1px 6px;border-radius:3px}
+    .paper-card .pa{font-size:.7rem;color:#64748b;margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .paper-card .pl{font-size:.66rem;margin-top:3px}
+    .paper-card .pl a{color:var(--accent);text-decoration:none}
+    .load{text-align:center;padding:60px 20px;color:var(--muted)}
+    .load .spinner-border{width:2rem;height:2rem;margin-bottom:8px}
+  </style>
+</head>
+<body>
+<div class="hero">
+  <h1>📚 学术会议与期刊</h1>
+  <p><a href="../index.html">🏠 主页</a> · <a href="../d3_mindmap.html">🧠 D3径向</a> · <a href="../mindmaps.html">📊 层级</a> · <a href="../radial.html">🎯 ECharts</a> · <a href="../galaxy.html">🌌 星系</a> · <a href="../conferences/">📚 会议</a> · <a href="../timeline.html">📈 时间轴</a></p>
+</div>
+<div class="container">
+  <div class="load" id="loading"><div class="spinner-border text-primary"></div><div>加载数据中…</div><div id="loadErr" style="color:#ef4444;display:none"></div></div>
+
+  <div id="main" style="display:none">
+    <div class="stats" id="stats"></div>
+
+    <div class="tabs" id="tabs">
+      <button class="on" data-tab="journals">📰 学术期刊 <span class="badge" id="jcnt"></span></button>
+      <button data-tab="conferences">🎤 学术会议 <span class="badge" id="ccnt"></span></button>
+    </div>
+
+    <div class="search-wrap"><input type="text" id="search" placeholder="🔍 搜索…"/></div>
+    <div class="grid" id="grid"></div>
+
+    <div class="detail-wrap" id="detailWrap">
+      <div class="detail" id="detail"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var data=null,currentTab="journals";
+  var loading=document.getElementById("loading"),main=document.getElementById("main");
+
+  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+  function renderStats(){
+    document.getElementById("stats").innerHTML=
+      '<div class="stat-card"><div class="num">'+data.total_journals+'</div><div class="lbl">学术期刊</div></div>'+
+      '<div class="stat-card"><div class="num">'+data.total_conferences+'</div><div class="lbl">学术会议</div></div>'+
+      '<div class="stat-card"><div class="num">'+data.total_papers+'</div><div class="lbl">论文总数</div></div>'+
+      '<div class="stat-card"><div class="num">3</div><div class="lbl">来源高校</div></div>';
+    document.getElementById("jcnt").textContent=data.total_journals;
+    document.getElementById("ccnt").textContent=data.total_conferences;
+  }
+
+  function renderCards(filter){
+    var list=data[currentTab]||[];
+    if(filter){var q=filter.toLowerCase();list=list.filter(function(c){return c.abbrev.toLowerCase().indexOf(q)>=0||c.full_name.toLowerCase().indexOf(q)>=0;});}
+    document.getElementById("grid").innerHTML=list.length?list.map(function(c){
+      return'<div class="vcard" data-id="'+c.id+'" onclick="window.selectVenue(\''+c.id+'\',\''+currentTab+'\')">'+
+        '<div class="abbrev">'+esc(c.abbrev)+'</div>'+
+        '<div class="fullname">'+esc(c.full_name)+'</div>'+
+        '<div class="meta"><span>📄 '+c.paper_count+'篇</span><span>📅 '+c.year_range+'</span></div>'+
+        (c.trend_summary?'<div class="trend-line">📈 '+esc(c.trend_summary.substring(0,60))+'</div>':'')+
+        '<div class="dirs">'+(c.top_directions||[]).slice(0,6).map(function(d){return'<span class="tag">'+esc(d.name)+'</span>';}).join("")+'</div>'+
+      '</div>';
+    }).join(""):'<div style="color:var(--muted);text-align:center;padding:40px">无匹配结果</div>';
+  }
+
+  function selectVenue(id, tab){
+    var list=data[tab||currentTab]||[];
+    var c=list.find(function(x){return x.id===id;});
+    if(!c) return;
+    document.querySelectorAll(".vcard").forEach(function(el){el.classList.toggle("on",el.dataset.id===id);});
+
+    var maxCount=Math.max.apply(null,(c.trend_data||[]).map(function(y){return y.count;}))||1;
+    var colors=["#93c5fd","#60a5fa","#3b82f6","#2563eb","#1d4ed8","#1e40af"];
+
+    var trendHtml='<div class="trend">'+(c.trend_data||[]).map(function(y,i){
+      var h=Math.max(6,(y.count/maxCount)*80);
+      return'<div class="bar" style="height:'+h+'px;background:'+(colors[i%colors.length])+'"><div class="cnt" style="color:'+(colors[i%colors.length])+'">'+(y.count||"")+'</div><div class="yr">'+y.year+'</div></div>';
+    }).join("")+'</div>';
+
+    var papersHtml=(c.papers||[]).map(function(p){
+      var link=p.url||(p.doi?'https://doi.org/'+p.doi.replace(/^https?:\/\/(doi\.org\/)?/i,''):'');
+      return'<div class="paper-card">'+
+        '<div class="pt">'+esc(p.title)+'</div>'+
+        '<div class="pm">📅 '+p.year+' · 👤 '+esc(p.authors)+'</div>'+
+        '<div class="pk">'+(p.directions||[]).map(function(k){return'<span class="kw">'+esc(k)+'</span>';}).join("")+'</div>'+
+        '<div class="pa">'+esc(p.abstract||"")+'</div>'+
+        (link?'<div class="pl"><a href="'+esc(link)+'" target="_blank">📄 原文 ↗</a> · <a href="https://doi.org/'+esc(p.doi.replace(/^https?:\/\/(doi\.org\/)?/i,''))+'" target="_blank">DOI</a></div>':'')+
+      '</div>';
+    }).join("");
+
+    document.getElementById("detail").innerHTML=
+      '<div class="d-abbrev">'+esc(c.abbrev)+'</div>'+
+      '<h2>'+esc(c.full_name)+'</h2>'+
+      '<div class="d-meta">📄 <b>'+c.paper_count+'</b> 篇 · 📅 '+c.year_range+' · '+(tab==="conferences"?"🎤 学术会议":"📰 学术期刊")+
+          (c.impact_factor?' · 📊 IF: '+esc(c.impact_factor):'')+
+          (c.frequency?' · 🗓 '+esc(c.frequency):'')+'</div>'+
+          (c.publisher?'<div class="d-meta">🏛 '+esc(c.publisher)+(c.website?' · <a href="'+esc(c.website)+'" target="_blank" style="color:#2563eb">官网↗</a>':'')+'</div>':'')+
+          (c.scope?'<div class="d-meta" style="color:#475569">📖 '+esc(c.scope)+'</div>':'')+
+      (c.trend_summary?'<div class="d-summary">📈 <b>趋势分析：</b>'+esc(c.trend_summary)+'</div>':'')+
+      '<div><b>研究方向分布：</b>'+c.top_directions.map(function(d){return'<span class="tag">'+esc(d.name)+' ('+d.count+')</span>';}).join(" ")+'</div>'+
+      '<h4 style="margin-top:14px">📊 各年收录趋势</h4>'+trendHtml+
+      '<h4 style="margin-top:16px">📄 相关论文 ('+(c.papers||[]).length+'篇)</h4>'+papersHtml;
+
+    document.getElementById("detailWrap").classList.add("on");
+    document.getElementById("detail").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  window.selectVenue=selectVenue;
+  window.onload=function(){};
+
+  document.getElementById("tabs").addEventListener("click",function(e){
+    var btn=e.target.closest("button[data-tab]");
+    if(!btn) return;
+    document.querySelectorAll("#tabs button").forEach(function(b){b.classList.remove("on");});
+    btn.classList.add("on");
+    currentTab=btn.dataset.tab;
+    document.getElementById("detailWrap").classList.remove("on");
+    renderCards(document.getElementById("search").value.trim());
+  });
+
+  document.getElementById("search").addEventListener("input",function(){renderCards(this.value.trim());});
+
+  fetch("conferences.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.json();
+  }).then(function(d){
+    data=d;loading.style.display="none";main.style.display="block";
+    renderStats();renderCards();
+  }).catch(function(e){
+    document.getElementById("loadErr").textContent="加载失败: "+e.message;document.getElementById("loadErr").style.display="block";
+  });
+})();
+</script>
+</body>
+</html>

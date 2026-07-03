@@ -1,0 +1,73 @@
+═══════════════════════════════════════
+  五、软件鉴别材料
+═══════════════════════════════════════
+
+提交方式：一般交存
+
+1. 源程序提交：
+   提交源程序连续的前30页和连续的后30页，共60页。
+   每页不少于50行。
+
+   源程序目录结构建议提取以下核心文件：
+   ┌─────────────────────────────────────────────┐
+   │ 前30页（项目核心模块）                        │
+   ├─────────────────────────────────────────────┤
+   │ pipeline_server.py    Flask服务器+AI搜索API  │
+   │ pipeline_runner.py    知识库更新管线引擎      │
+   │ ingest.py             增量入库入口            │
+   │ taxonomy.py           五维分类引擎（244行）    │
+   │ build_outputs.py      前端数据生成（455行）    │
+   │ experiment_retrieval.py 检索实验（235行）      │
+   │ crawl_papers.py        OpenAlex爬虫（200行）  │
+   │ build_vector_db.py     ChromaDB向量库（184行）│
+   │ bailian_client.py      百炼千问调用（76行）    │
+   │ build_conferences.py   会议数据提取（373行）   │
+   │ config.py              项目配置（19行）       │
+   │ zotero_parser.py       Zotero解析（66行）     │
+   │ web/index.html (~820行)                      │
+   │ web/app.js            高级检索（225行）       │
+   │ web/galaxy.js          3D星系（323行）        │
+   │ web/mindmaps.js        层级导图（276行）      │
+   │ web/radial.js          径向树（293行）        │
+   ├─────────────────────────────────────────────┤
+   │ 后30页（辅助模块+HTML页面）                   │
+   ├─────────────────────────────────────────────┤
+   │ enrich_papers.py       元数据补全（77行）      │
+   │ experiment_demo.py     实验演示（170行）       │
+   │ experiment_report.py   实验报告（93行）        │
+   │ rebuild_all.py          一键重建（63行）       │
+   │ bootstrap_data.py       数据引导（27行）       │
+   │ slim_mindmaps.py        导图精简（29行）       │
+   │ web/d3_mindmap.html                           │
+   │ web/mindmaps.html                              │
+   │ web/radial.html                                │
+   │ web/galaxy.html                                │
+   │ web/search.html                                │
+   │ web/timeline.html                              │
+   │ web/conferences/index.html                     │
+   │ web/experiment.html                            │
+   │ web/styles.css                                 │
+   │ setup_api.py                                   │
+   └─────────────────────────────────────────────┘
+
+   源程序总行数：约 3200 行（Python） + 1100 行（JavaScript） + 1200 行（HTML/CSS）
+   = 约 5500 行业务代码（不含第三方库和自动生成文件）
+
+2. 文档提交：
+   提交以下任一文档的连续前30页和连续后30页：
+   建议提交"SRTP结题报告.md"或"DEVELOPER_HANDOFF.md"
+
+   备选文档：
+   A) SRTP结题报告.md — 项目完整的结题报告，含研究目的、创新点、技术方案、成果总结
+   B) DEVELOPER_HANDOFF.md — 开发者交接文档，含系统架构、API说明、数据格式
+   C) PIPELINE_FLOWCHART.md — 全流程管线图（含5张Mermaid流程图）
+
+═══════════════════════════════════════
+  打印格式要求
+═══════════════════════════════════════
+
+  - 每页页眉标注：软件全称 + 版本号
+  - 页眉示例："面向机器人柔性磨削的检索增强生成知识问答系统 V1.0"
+  - 源程序每页不少于50行（建议等宽字体、9-10pt）
+  - 文档每页不少于30行
+  - A4纸打印，页码连续标注

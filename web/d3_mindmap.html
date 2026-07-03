@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>D3 径向树 — Dark Neural System</title>
+<style>
+/* ═══════════════ DESIGN SYSTEM v2.0 ═══════════════ */
+:root {
+  --bg-deep: #050B1F;
+  --cyan: #22D3EE;
+  --blue: #3B82F6;
+  --indigo: #6366F1;
+  --navy: #1E3A8A;
+  --border: rgba(255,255,255,0.08);
+  --text: #e8eaed;
+  --muted: #7c84a0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg-deep);overflow:hidden;height:100vh;display:flex;flex-direction:column}
+
+/* ── Topbar ── */
+.topbar{display:flex;align-items:center;gap:6px;padding:5px 10px;background:rgba(5,11,31,0.9);border-bottom:1px solid var(--border);font-size:0.7rem;flex-shrink:0;flex-wrap:wrap;z-index:10;backdrop-filter:blur(12px)}
+.topbar a{color:var(--cyan);text-decoration:none;padding:3px 8px;border:1px solid var(--border);border-radius:4px;white-space:nowrap;transition:all 0.2s}
+.topbar a:hover,.topbar a.on{color:#fff;border-color:rgba(34,211,238,0.35);background:rgba(34,211,238,0.08);box-shadow:0 0 8px rgba(34,211,238,0.12)}
+.topbar .title{color:var(--cyan);font-weight:700;font-size:0.8rem;margin-right:8px}
+
+/* ── Mindmap area ── */
+#mindmap{flex:1;background:radial-gradient(ellipse at center,rgba(14,25,58,0.6) 0%,#050B1F 100%);position:relative}
+.link{fill:none;stroke:#1e3050;stroke-width:1px;opacity:0.4;transition:all 0.3s}
+.node circle{cursor:pointer;transition:all 0.25s ease-out}
+.node circle:hover{filter:drop-shadow(0 0 8px rgba(34,211,238,0.7))}
+.node text{fill:#b0b8d0;pointer-events:none;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+
+/* ── Loading ── */
+.loading-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(5,11,31,0.96);z-index:999}
+.loading-overlay .spinner{width:36px;height:36px;border:3px solid #1e3050;border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-overlay .msg{font-size:0.9rem;color:var(--text);margin-bottom:8px}
+.loading-overlay .bar-wrap{width:260px;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-bottom:4px}
+.loading-overlay .bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:3px;transition:width 0.3s;width:0}
+.loading-overlay .pct{font-size:0.7rem;color:var(--muted)}
+.loading-overlay .err{color:#f87171;font-size:0.75rem;margin-top:8px;display:none}
+
+/* ── Tooltip ── */
+.tooltip{position:absolute;background:rgba(8,14,36,0.97);color:var(--text);padding:14px;border-radius:10px;font-size:12px;pointer-events:none;max-width:380px;border:1px solid rgba(34,211,238,0.25);box-shadow:0 8px 32px rgba(0,0,0,0.6);z-index:1000;display:none;line-height:1.5}
+.tooltip h3{color:var(--cyan);margin-bottom:6px;font-size:13px}
+.tooltip .ti{color:var(--muted);font-size:11px;line-height:1.5;max-height:100px;overflow-y:auto}
+.tooltip .kw{color:var(--indigo);font-size:10px;margin-top:4px}
+
+/* ── Legend ── */
+.legend{position:absolute;top:56px;right:10px;background:rgba(8,14,36,0.92);padding:10px 12px;border-radius:8px;border:1px solid var(--border);color:var(--muted);font-size:0.62rem;z-index:10}
+.legend h4{color:var(--cyan);margin-bottom:4px}
+.legend-item{display:flex;align-items:center;margin:2px 0;gap:6px}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── Controls ── */
+.controls{position:absolute;bottom:12px;left:10px;display:flex;gap:6px;z-index:10}
+.controls button{background:rgba(34,211,238,0.06);color:var(--cyan);border:1px solid rgba(34,211,238,0.2);padding:4px 10px;border-radius:6px;cursor:pointer;font-size:0.65rem;transition:all 0.2s}
+.controls button:hover{background:rgba(34,211,238,0.15);box-shadow:0 0 8px rgba(34,211,238,0.15)}
+.search-box{position:absolute;top:56px;left:10px;z-index:10}
+.search-box input{background:rgba(8,14,36,0.92);border:1px solid rgba(255,255,255,0.1);color:var(--text);padding:6px 12px;border-radius:6px;width:180px;font-size:0.72rem;outline:none;transition:all 0.2s}
+.search-box input:focus{border-color:var(--cyan);box-shadow:0 0 8px rgba(34,211,238,0.12)}
+.stats{position:absolute;bottom:12px;right:10px;background:rgba(8,14,36,0.92);padding:6px 10px;border-radius:6px;border:1px solid var(--border);color:var(--muted);font-size:0.6rem;z-index:10}
+.tip{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.15);font-size:0.6rem;z-index:10}
+#bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5}
+</style>
+</head>
+<body>
+<canvas id="bgParticles"></canvas>
+
+<div class="topbar">
+  <a href="index.html" style="font-weight:700;color:#fff;border-color:rgba(34,211,238,0.35)">← 返回主页</a>
+  <span style="color:rgba(255,255,255,0.15);margin:0 4px">|</span>
+  <a href="d3_mindmap.html" class="on">🧠 D3径向</a>
+  <a href="mindmaps.html">📊 层级导图</a>
+  <a href="radial.html">🎯 ECharts径向</a>
+  <a href="galaxy.html">🌌 星系</a>
+</div>
+
+<div id="mindmap">
+  <div class="loading-overlay" id="loader">
+    <div class="spinner"></div>
+    <div class="msg" id="loadMsg">正在初始化…</div>
+    <div class="bar-wrap"><div class="bar-fill" id="loadBar"></div></div>
+    <div class="pct" id="loadPct">0%</div>
+    <div class="err" id="loadErr"></div>
+  </div>
+</div>
+
+<div class="search-box"><input type="text" id="search" placeholder="🔍 搜索…"></div>
+<div class="legend" id="legend"></div>
+<div class="controls">
+  <button onclick="resetView()">重置视图</button>
+  <button onclick="expandOne()">展开一层</button>
+  <button onclick="collapseAll()">全部折叠</button>
+</div>
+<div class="stats" id="stats"></div>
+<div class="tip">🖱 滚轮缩放 · 拖拽 · 单击节点展开 · 悬停看详情 · 双击开原文</div>
+<div class="tooltip" id="tooltip"></div>
+
+<script src="d3.min.js"></script>
+<script>
+(function(){
+  // Progress UI
+  var loadMsg=document.getElementById("loadMsg"),loadBar=document.getElementById("loadBar"),
+      loadPct=document.getElementById("loadPct"),loadErr=document.getElementById("loadErr"),loader=document.getElementById("loader");
+  function prog(msg,pct){loadMsg.textContent=msg;loadBar.style.width=(pct||0)+"%";loadPct.textContent=(pct||0)+"%";loadErr.style.display="none"}
+  function fail(msg){loadErr.textContent=msg;loadErr.style.display="block";loadMsg.textContent="加载失败";console.error(msg)}
+
+  prog("检查 D3.js…",5);
+  if(typeof d3==="undefined"){fail("d3.min.js 未加载");return}
+  prog("D3.js v"+d3.version+" 就绪",10);
+
+  var papersById={},mindmapsFive=null,rootData=null,svg,g,zoom,root,treeLayout,width,height;
+  // ═══════════ DARK NEURAL COLOR SCALE ═══════════
+  // root=cyan glow, L1=navy, L2=blue, L3=indigo, papers=soft-indigo
+  var colors=["#22D3EE","#1E3A8A","#3B82F6","#6366F1","#818cf8"];
+
+  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+  function paperFromId(pid){
+    var p=papersById[String(pid)]||papersById[pid];
+    if(!p) return {id:pid,title:"N/A",keywords_zh:[],doi:"",url:"",summary_zh:"",year:""};
+    return {id:p.id,title:p.title||p.title_en||"",keywords_zh:p.keywords||p.keywords_zh||[],doi:p.doi||"",url:p.url||"",summary_zh:p.summary_zh||"",year:p.year||""};
+  }
+
+  function buildTree(){
+    var t=mindmapsFive.process_tree;
+    if(!t||!t.length) return {name:"机器人柔性磨削",color:colors[0],children:[]};
+    return {name:"机器人柔性磨削",color:colors[0],children:t.map(function(l1){
+      return {name:l1.name,color:colors[1],children:(l1.children||[]).map(function(l2){
+        return {name:l2.name,color:colors[2],children:(l2.children||[]).map(function(l3){
+          var pnodes=(l3.paper_ids||[]).slice(0,50).map(function(pid){
+            var p=paperFromId(pid);return {name:"#"+pid+" "+(p.title||"").substring(0,20),isPaper:true,_paperId:pid};
+          });
+          return {name:l3.name,color:colors[3],children:pnodes.length?pnodes:[{name:"(无)",color:"#475569"}]};
+        })};
+      })};
+    })};
+  }
+
+  function initViz(){
+    width=window.innerWidth;height=window.innerHeight-36;
+    var el=document.getElementById("mindmap");
+    el.querySelectorAll("svg").forEach(function(s){s.remove()});
+    svg=d3.select("#mindmap").append("svg").attr("width",width).attr("height",height);
+    g=svg.append("g");
+    zoom=d3.zoom().scaleExtent([0.1,5]).on("zoom",function(e){g.attr("transform",e.transform)});
+    svg.call(zoom);
+  }
+
+  function render(data){
+    prog("渲染图谱…",85);
+    initViz();
+    root=d3.hierarchy(data);
+    treeLayout=d3.tree().size([2*Math.PI,Math.min(width,height)/2.8]).separation(function(a,b){return(a.parent===b.parent?2:3)/(a.depth+1)});
+    treeLayout(root);
+    root.descendants().forEach(function(d){if(d.depth>=2&&d.children){d._children=d.children;d.children=null}});
+    draw();
+    svg.call(zoom.transform,d3.zoomIdentity.translate(width/2,height/2).scale(0.5));
+    document.getElementById("stats").innerHTML="节点:"+root.descendants().length+" · 连线:"+root.links().length;
+    document.getElementById("legend").innerHTML="<h4>图例</h4>"+
+      ["L1 工艺领域","L2 工艺方式","L3 研究主题","论文"].map(function(n,i){
+        return'<div class="legend-item"><div class="legend-dot" style="background:'+colors[i+1]+';box-shadow:0 0 4px '+colors[i+1]+'"></div>'+n+'</div>';
+      }).join("");
+    loader.style.display="none";prog("完成!",100);
+  }
+
+  function draw(){
+    // Links — semi-transparent gradient effect via stroke color from target node
+    g.selectAll(".link").data(root.links()).join("path").attr("class","link")
+      .attr("d",d3.linkRadial().angle(function(d){return d.x}).radius(function(d){return d.y}))
+      .style("stroke",function(d){return d.target.data.color||"#1e3050"})
+      .style("opacity",function(d){return d.target.depth<=2?0.5:0.3});
+
+    // Nodes
+    var nodes=g.selectAll(".node").data(root.descendants(),function(d){return d.data.name+(d.data._paperId||"");}).join("g").attr("class","node")
+      .attr("transform",function(d){var a=d.x-Math.PI/2;return"translate("+(d.y*Math.cos(a))+","+(d.y*Math.sin(a))+")"});
+
+    // Circles with glow
+    nodes.append("circle")
+      .attr("r",function(d){if(d.depth===0)return 20;if(d.data.isPaper)return 4.5;if(d.depth===1)return 12;if(d.depth===2)return 9;return 7})
+      .style("fill",function(d){return d.data.color||colors[Math.min(d.depth,4)]})
+      .style("stroke","rgba(255,255,255,0.4)").style("stroke-width",1.2)
+      .style("filter",function(d){
+        if(d.depth===0) return "drop-shadow(0 0 10px rgba(34,211,238,0.6))";
+        if(d.depth===1) return "drop-shadow(0 0 5px rgba(59,130,246,0.4))";
+        if(d.depth===2) return "drop-shadow(0 0 3px rgba(99,102,241,0.3))";
+        return "none";
+      })
+      .style("cursor","pointer")
+      .on("click",function(event,d){event.stopPropagation();
+        if(d.children){d._children=d.children;d.children=null}else if(d._children){d.children=d._children;d._children=null}
+        treeLayout(root);draw();
+      });
+
+    // Labels
+    nodes.append("text").attr("dy",function(d){return d.data.isPaper?"-1.2em":"0.35em"}).attr("text-anchor","middle")
+      .text(function(d){var n=d.data.name||"";if(d.data.isPaper) return n.length>12?n.substring(0,10)+"..":n;return n.length>14?n.substring(0,12)+"..":n})
+      .style("font-size",function(d){if(d.depth===0)return"16px";if(d.depth===1)return"12px";if(d.data.isPaper)return"7px";return"9px"})
+      .style("font-weight",function(d){return d.depth<=1?"bold":"normal"})
+      .style("fill",function(d){return d.data.isPaper?"#818cf8":"#b0b8d0"});
+
+    // Tooltip (papers only)
+    nodes.on("mouseenter",function(event,d){
+      if(!d.data.isPaper) return;
+      var p=paperFromId(d.data._paperId||0),tt=document.getElementById("tooltip");
+      tt.style.display="block";tt.style.left=(event.pageX+12)+"px";tt.style.top=(event.pageY-10)+"px";
+      tt.innerHTML="<h3>#"+p.id+" "+esc((p.title||"").substring(0,45))+"</h3>"+
+        (p.year?'<div style="color:var(--muted);font-size:10px">📅 '+p.year+'</div>':'')+
+        '<div class="ti">'+esc(p.summary_zh||"暂无摘要")+'</div>'+
+        (p.keywords_zh.length?'<div class="kw">'+esc(p.keywords_zh.join(" · "))+'</div>':'')+
+        '<div style="color:#34d399;font-size:10px;margin-top:4px">双击打开原文</div>';
+    }).on("mouseleave",function(){document.getElementById("tooltip").style.display="none"});
+
+    nodes.on("dblclick",function(event,d){
+      if(!d.data.isPaper) return;
+      var p=paperFromId(d.data._paperId||0);
+      var link=p.url||(p.doi?"https://doi.org/"+String(p.doi).replace(/^https?:\/\/(doi\.org\/)?/i,""):"");
+      if(link) window.open(link,"_blank");
+    });
+
+    svg.on("click",function(){document.getElementById("tooltip").style.display="none"});
+  }
+
+  // Search filter
+  document.getElementById("search").addEventListener("input",function(){
+    var q=this.value.toLowerCase();
+    d3.selectAll(".node circle,.node text").style("opacity",function(d){
+      if(!q) return 1;
+      return d.data.name.toLowerCase().indexOf(q)>=0?1:0.1;
+    });
+  });
+
+  // Controls
+  window.resetView=function(){svg.transition().duration(500).call(zoom.transform,d3.zoomIdentity.translate(width/2,height/2).scale(0.5))};
+  window.expandOne=function(){root.descendants().forEach(function(d){if(d._children&&d.depth<=3){d.children=d._children;d._children=null}});treeLayout(root);draw()};
+  window.collapseAll=function(){root.descendants().forEach(function(d){if(d.children&&d.depth>=1){d._children=d.children;d.children=null}});treeLayout(root);draw()};
+
+  window.addEventListener("resize",function(){
+    width=window.innerWidth;height=window.innerHeight-36;
+    svg.attr("width",width).attr("height",height);
+    treeLayout.size([2*Math.PI,Math.min(width,height)/2.8]);treeLayout(root);draw();
+  });
+
+  // Load data
+  prog("加载论文索引…",20);
+  fetch("papers_index.json",{cache:"no-store"}).then(function(r){
+    if(!r.ok) throw new Error("papers_index.json HTTP "+r.status);
+    prog("解析论文索引…",40);
+    return r.json();
+  }).then(function(idx){
+    papersById=idx.by_id||{};
+    prog(Object.keys(papersById).length+" 篇论文就绪",55);
+    prog("加载导图结构…",60);
+    return fetch("mindmaps_five.json",{cache:"no-store"});
+  }).then(function(r){
+    if(!r.ok) throw new Error("mindmaps_five.json HTTP "+r.status);
+    prog("解析导图…",75);
+    return r.json();
+  }).then(function(mm){
+    mindmapsFive=mm;
+    prog("构建树…",82);
+    rootData=buildTree();
+    render(rootData);
+  }).catch(function(e){
+    fail(e.message||String(e));
+  });
+})();
+</script>
+<script>
+// ═══════════════════════════════════════════════════════════
+// PARTICLE SYSTEM v2.0 — Dark Neural
+// ═══════════════════════════════════════════════════════════
+(function(){var c=document.getElementById("bgParticles"),ctx=c.getContext("2d"),pts=[],mx=0,my=0,tmx=0,tmy=0;function rs(){c.width=window.innerWidth;c.height=window.innerHeight}rs();window.addEventListener("resize",rs);document.addEventListener("mousemove",function(e){tmx=e.clientX;tmy=e.clientY});mx=window.innerWidth/2;my=window.innerHeight/2;tmx=mx;tmy=my;var pal=[{r:59,g:130,b:246,a:0.6},{r:99,g:102,b:241,a:0.5},{r:34,g:211,b:238,a:0.4},{r:37,g:99,b:235,a:0.45}];for(var i=0;i<120;i++){var col=pal[Math.floor(Math.random()*pal.length)];pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.25,vy:(Math.random()-0.5)*0.25,r:Math.random()*1.4+0.25,col:col,ox:Math.random()*c.width,oy:Math.random()*c.height})}function dr(){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;ctx.clearRect(0,0,c.width,c.height);for(var i=0;i<pts.length;i++){var p=pts[i];var dxm=p.x-mx,dym=p.y-my,dm=Math.sqrt(dxm*dxm+dym*dym);var parallax=dm<300?(1-dm/300)*0.12:0;var nx=dm>0.1?dxm/dm:0,ny=dm>0.1?dym/dm:0;p.vx+=nx*parallax*0.02;p.vy+=ny*parallax*0.02;p.vx*=0.999;p.vy*=0.999;p.vx+=(p.ox-p.x)*0.00003;p.vy+=(p.oy-p.y)*0.00003;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba("+p.col.r+","+p.col.g+","+p.col.b+","+p.col.a+")";ctx.fill();if(p.r>0.9){ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.5,0,Math.PI*2);ctx.fillStyle="rgba("+p.col.r+","+p.col.g+","+p.col.b+","+(p.col.a*0.1)+")";ctx.fill()}}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(79,130,210,"+(0.035*(1-dist/100))+")";ctx.lineWidth=0.3;ctx.stroke()}}}requestAnimationFrame(dr)}dr()})();
+</script>
+</body>
+</html>

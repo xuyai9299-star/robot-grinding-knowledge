@@ -1,0 +1,37 @@
+name: Ingest New Papers
+
+on:
+  push:
+    paths:
+      - "new_papers/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ingest
+        env:
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+          DASHSCOPE_MODEL: qwen-plus
+        run: python ingest.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add papers_enriched_updated.json papers_classified.json papers_index.json category_index.json mindmap_stats.json mindmaps_five.json outline.html *.mm archive/ new_papers/
+          git diff --staged --quiet || git commit -m "chore: auto ingest and rebuild [skip ci]"
+          git push

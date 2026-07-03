@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>高级检索 — Dark Neural System</title>
+<style>
+:root{--bg:#050B1F;--card:rgba(255,255,255,0.03);--text:#e8eaed;--muted:#7c84a0;--accent:#22D3EE;--blue:#2563EB;--border:rgba(255,255,255,0.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column}
+.topbar{display:flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(5,11,31,0.9);border-bottom:1px solid var(--border);flex-shrink:0;backdrop-filter:blur(12px)}
+.topbar a{color:var(--accent);text-decoration:none;font-size:0.78rem;font-weight:600;padding:4px 10px;border:1px solid var(--border);border-radius:6px;transition:all 0.2s}
+.topbar a:hover{border-color:rgba(34,211,238,0.3);background:rgba(34,211,238,0.06)}
+.main{display:flex;flex:1;overflow:hidden}
+.left{width:260px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;padding:12px}
+.mid{flex:1;overflow-y:auto;padding:12px}
+.right{width:340px;flex-shrink:0;border-left:1px solid var(--border);overflow-y:auto;padding:12px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+.panel h3{font-size:0.8rem;color:var(--accent);margin-bottom:8px}
+.search-box{display:flex;gap:8px;margin-bottom:10px}
+.search-box input{flex:1;padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.03);color:#fff;font-size:0.85rem;outline:none;transition:all 0.2s}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 12px rgba(34,211,238,0.1)}
+.search-box input::placeholder{color:rgba(255,255,255,0.15)}
+.search-box button{background:var(--blue);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:600;cursor:pointer}
+.tree-item{cursor:pointer;padding:4px 8px;border-radius:6px;font-size:0.72rem;display:flex;align-items:center;gap:4px;margin-bottom:1px;transition:all 0.15s}
+.tree-item:hover{background:rgba(255,255,255,0.04)}
+.tree-item.on{background:rgba(34,211,238,0.08);color:var(--accent)}
+.tree-item .badge{background:rgba(255,255,255,0.06);color:var(--muted);font-size:0.62rem;padding:1px 6px;border-radius:8px;margin-left:auto}
+.paper-item{cursor:pointer;padding:8px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:4px;transition:all 0.15s;font-size:0.73rem}
+.paper-item:hover{border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.02)}
+.paper-item.on{border-color:var(--accent);background:rgba(34,211,238,0.05)}
+.paper-item .pt{font-weight:600;margin-bottom:2px}
+.paper-item .pm{font-size:0.62rem;color:var(--muted)}
+.detail h4{font-size:0.85rem;color:var(--accent);margin-bottom:4px}
+.detail .tags{margin:8px 0;display:flex;flex-wrap:wrap;gap:4px}
+.detail .tags span{background:rgba(34,211,238,0.08);color:var(--accent);padding:2px 8px;border-radius:4px;font-size:0.62rem}
+.detail .btns{margin:8px 0}
+.detail .btns a{background:var(--blue);color:#fff;padding:4px 12px;border-radius:6px;text-decoration:none;font-size:0.68rem;font-weight:600}
+.detail .abs{color:var(--muted);font-size:0.7rem;line-height:1.5;max-height:200px;overflow-y:auto}
+#loadBar{width:0;height:3px;background:var(--accent);transition:width 0.3s;position:fixed;top:0;left:0;z-index:9999}
+#bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5}
+</style>
+</head>
+<body>
+<canvas id="bgParticles"></canvas>
+<div id="loadBar"></div>
+<div class="topbar">
+  <a href="index.html" style="font-weight:700">← 返回主页</a>
+  <span style="flex:1"></span>
+  <span style="font-size:0.7rem;color:var(--muted)" id="infoBar">加载中…</span>
+</div>
+
+<div class="main">
+  <div class="left">
+    <div class="panel">
+      <h3>📂 分类导航</h3>
+      <div id="treeContent"></div>
+    </div>
+  </div>
+  <div class="mid">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索标题/关键词/摘要/作者…">
+      <button onclick="doSearch()">🔍 搜索</button>
+    </div>
+    <div id="listTitle" style="font-size:0.78rem;color:var(--muted);margin-bottom:6px">全部论文</div>
+    <div id="paperList"></div>
+    <div id="pagination" style="text-align:center;margin-top:10px;display:flex;gap:4px;justify-content:center;flex-wrap:wrap"></div>
+  </div>
+  <div class="right">
+    <div class="panel detail" id="detailPanel">
+      <p style="color:var(--muted);font-size:0.75rem">👈 点击左侧分类或搜索论文查看详情</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var papersById={},stats=null,currentIds=[],selectedId=null,page=1,pageSize=50;
+  var lb=document.getElementById("loadBar");
+  function prog(p){lb.style.width=p+"%"}
+
+  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+  function extLink(p){if(!p)return"";if(p.url)return p.url;var d=String(p.doi||"").replace(/^https?:\/\/(doi\.org\/)?/i,"");return d?"https://doi.org/"+d:""}
+
+  function showDetail(pid){
+    var p=papersById[String(pid)]||papersById[pid];
+    if(!p)return;
+    selectedId=pid;
+    document.querySelectorAll(".paper-item").forEach(function(el){el.classList.toggle("on",el.dataset.pid==String(pid))});
+    var link=extLink(p),kws=(p.keywords||p.keywords_zh||[]).map(function(k){return"<span>"+esc(k)+"</span>"}).join("");
+    document.getElementById("detailPanel").innerHTML=
+      '<h4>#'+pid+' '+esc((p.title||p.title_en||"").substring(0,55))+'</h4>'+
+      '<div style="font-size:0.65rem;color:var(--muted);margin:4px 0">'+esc(p.authors||"")+' · '+esc(p.year||"")+' · '+esc(p.school||"")+'</div>'+
+      '<div class="tags">'+(kws||"<span>无关键词</span>")+'</div>'+
+      '<div class="btns">'+(link?'<a href="'+esc(link)+'" target="_blank">📄 原文 ↗</a>':'')+'</div>'+
+      '<div class="abs"><b>EN:</b> '+esc((p.title_en||p.title||"").substring(0,120))+'</div>'+
+      '<div class="abs" style="margin-top:6px">'+esc(p.summary_zh||p.abstract||"暂无摘要")+'</div>';
+  }
+
+  function renderList(ids,title){
+    currentIds=ids;page=1;
+    document.getElementById("listTitle").textContent=title+" ("+ids.length+"篇)";
+    renderPage();
+  }
+
+  function renderPage(){
+    var q=(document.getElementById("searchInput").value||"").toLowerCase();
+    var filtered=currentIds;
+    if(q){filtered=currentIds.filter(function(id){var p=papersById[String(id)]||papersById[id];if(!p)return false;return[p.title,p.title_en,p.summary_zh,p.abstract,(p.keywords||[]).join(" "),p.authors].join(" ").toLowerCase().indexOf(q)>=0})}
+    var total=filtered.length,totalPages=Math.ceil(total/pageSize);
+    var pg=filtered.slice((page-1)*pageSize,page*pageSize);
+    var html="";
+    pg.forEach(function(id){
+      var p=papersById[String(id)]||papersById[id];if(!p)return;
+      html+='<div class="paper-item'+(selectedId===id?" on":"")+'" data-pid="'+id+'" onclick="showDetail('+id+')"><div class="pt">#'+id+' '+esc((p.title||p.title_en||"").substring(0,55))+'</div><div class="pm">'+esc(p.year||"")+' · '+esc((p.authors||"").substring(0,50))+'</div></div>';
+    });
+    document.getElementById("paperList").innerHTML=html||'<div style="color:var(--muted)">无匹配结果</div>';
+
+    var phtml="";
+    for(var i=1;i<=totalPages;i++){
+      phtml+='<button onclick="page='+i+';renderPage()" style="padding:4px 10px;border:1px solid '+(i===page?'var(--accent)':'var(--border)')+';border-radius:6px;background:'+(i===page?'rgba(34,211,238,0.08)':'none')+';color:'+(i===page?'var(--accent)':'var(--muted)')+';cursor:pointer;font-size:0.65rem">'+i+'</button>';
+    }
+    document.getElementById("pagination").innerHTML=totalPages>1?phtml:"";
+    document.getElementById("infoBar").textContent="共 "+total+" 篇";
+  }
+
+  function doSearch(){renderPage()}
+  document.getElementById("searchInput").addEventListener("input",function(){page=1;renderPage()});
+  document.getElementById("searchInput").addEventListener("keydown",function(e){if(e.key==="Enter"){page=1;renderPage()}});
+
+  prog(10);
+  Promise.all([
+    fetch("papers_index.json",{cache:"no-store"}).then(function(r){return r.json()}),
+    fetch("mindmap_stats.json",{cache:"no-store"}).then(function(r){return r.json()}),
+  ]).then(function(res){
+    prog(60);
+    papersById=res[0].by_id||{};stats=res[1];
+    function renderTree(nodes,lvl){
+      var h="";nodes.forEach(function(n){var ids=n.paper_ids||[];h+='<div class="tree-item" data-ids=\''+JSON.stringify(ids)+'\' data-title="'+esc(n.path||n.name)+'"><span>📌 '+esc(n.name)+'</span><span class="badge">'+(n.count||ids.length)+'</span></div>';if(n.children)h+=renderTree(n.children,lvl+1)});
+      return h;
+    }
+    var treeHtml=renderTree(stats.process_tree||[],0);
+    document.getElementById("treeContent").innerHTML=treeHtml;
+    document.querySelectorAll(".tree-item").forEach(function(el){el.addEventListener("click",function(){
+      document.querySelectorAll(".tree-item").forEach(function(e){e.classList.remove("on")});el.classList.add("on");
+      renderList(JSON.parse(el.dataset.ids||"[]"),el.dataset.title||"论文列表");
+    })});
+    var allIds=Object.keys(papersById).map(Number).sort(function(a,b){return a-b});
+    renderList(allIds,"全部论文");
+    var q=new URLSearchParams(location.search).get("q");if(q){document.getElementById("searchInput").value=q;doSearch()}
+    prog(100);setTimeout(function(){lb.style.display="none"},400);
+  }).catch(function(e){document.getElementById("paperList").innerHTML='<div style="color:#f87171">加载失败: '+esc(e.message)+'</div>'});
+})();
+</script>
+<script>
+// ═══════════ PARTICLE SYSTEM v2.0 ═══════════
+(function(){var c=document.getElementById("bgParticles"),ctx=c.getContext("2d"),pts=[],mx=0,my=0,tmx=0,tmy=0;function rs(){c.width=window.innerWidth;c.height=window.innerHeight}rs();window.addEventListener("resize",rs);document.addEventListener("mousemove",function(e){tmx=e.clientX;tmy=e.clientY});mx=window.innerWidth/2;my=window.innerHeight/2;tmx=mx;tmy=my;var pal=[{r:59,g:130,b:246,a:0.6},{r:99,g:102,b:241,a:0.5},{r:34,g:211,b:238,a:0.4},{r:37,g:99,b:235,a:0.45}];for(var i=0;i<100;i++){var col=pal[Math.floor(Math.random()*pal.length)];pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,r:Math.random()*1.3+0.2,col:col,ox:Math.random()*c.width,oy:Math.random()*c.height})}function dr(){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;ctx.clearRect(0,0,c.width,c.height);for(var i=0;i<pts.length;i++){var p=pts[i];var dxm=p.x-mx,dym=p.y-my,dm=Math.sqrt(dxm*dxm+dym*dym);var parallax=dm<300?(1-dm/300)*0.1:0;var nx=dm>0.1?dxm/dm:0,ny=dm>0.1?dym/dm:0;p.vx+=nx*parallax*0.02;p.vy+=ny*parallax*0.02;p.vx*=0.999;p.vy*=0.999;p.vx+=(p.ox-p.x)*0.00003;p.vy+=(p.oy-p.y)*0.00003;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba("+p.col.r+","+p.col.g+","+p.col.b+","+p.col.a+")";ctx.fill()}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(79,130,210,"+(0.03*(1-dist/100))+")";ctx.lineWidth=0.25;ctx.stroke()}}}requestAnimationFrame(dr)}dr()})();
+</script>
+</body>
+</html>

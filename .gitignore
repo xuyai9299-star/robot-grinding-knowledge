@@ -1,0 +1,19 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+new_papers/*.csv
+!new_papers/.gitkeep
+!new_papers/README.md
+
+# Local Claude settings
+.claude/settings.local.json
+
+# Generated QR images
+deploy_tools/*.png
+
+# Python-generated data (rebuilt by pipeline)
+papers_enriched_updated.json

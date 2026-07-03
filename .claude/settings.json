@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/微信/聊天记录/xwechat_files/wxid_662hjumkdqz922_0040/msg/file/2026-06/**)",
+      "PowerShell(cd d:\\\\robot-grinding-knowledge; Start-Job -Name testserver { py -3 pipeline_server.py 2>&1 }; Start-Sleep -Seconds 3; $output = Receive-Job -Name testserver 2>&1; Stop-Job -Name testserver; Remove-Job -Name testserver -Force; Write-Output $output)",
+      "PowerShell(py -3 \"D:\\\\robot-grinding-knowledge\\\\pipeline_server.py\" 2>&1)",
+      "PowerShell(py -3 -m pip install PyPDF2 -q 2>&1)",
+      "PowerShell(py -3 -m pip install python-docx pdfplumber -q 2>&1)"
+    ]
+  }
+}

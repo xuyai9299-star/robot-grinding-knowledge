@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd c:\\\\Users\\\\Lenovo\\\\robot-grinding-knowledge; Remove-Item _check_size.py -Force -ErrorAction SilentlyContinue; Remove-Item _slim_root.py -Force -ErrorAction SilentlyContinue; Write-Host \"临时文件已清理\"; Write-Host \"\"; Write-Host \"=== 文件大小对比 ===\"; Write-Host \"mindmaps_five.json: $\\([math]::Round\\(\\(Get-Item mindmaps_five.json\\).Length/1024\\)\\) KB\"; Write-Host \"web/mindmaps_five.json: $\\([math]::Round\\(\\(Get-Item web/mindmaps_five.json\\).Length/1024\\)\\) KB\"; Write-Host \"papers_index.json: $\\([math]::Round\\(\\(Get-Item papers_index.json\\).Length/1024\\)\\) KB\")"
+    ]
+  }
+}

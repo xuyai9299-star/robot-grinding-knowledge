@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RGKB Dashboard — 机器人柔性磨削RAG知识问答系统</title>
+<link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="db-root">
+
+<!-- ====== TOP BAR ====== -->
+<header class="db-top">
+  <div class="db-brand">
+    <span class="db-logo">RGKB</span>
+    <div>
+      <h1>面向机器人柔性磨削的RAG知识问答系统</h1>
+      <p>RAG-based Knowledge System for Robotic Grinding Research</p>
+    </div>
+  </div>
+  <div class="db-stats">
+    <div class="db-stat"><span class="ds-num">1,247+</span><span class="ds-label">论文</span></div>
+    <div class="db-stat"><span class="ds-num">80+</span><span class="ds-label">期刊/会议</span></div>
+    <div class="db-stat"><span class="ds-num">1988–2026</span><span class="ds-label">时间跨度</span></div>
+  </div>
+</header>
+
+<!-- ====== MAIN GRID ====== -->
+<div class="db-main">
+
+  <!-- LEFT: Knowledge System -->
+  <aside class="db-left">
+    <h3>Knowledge System</h3>
+    <div class="db-card clickable" onclick="navigateTo('../d3_mindmap.html')">
+      <div class="dbc-icon">🧠</div><div class="dbc-title">知识图谱</div>
+      <div class="dbc-desc">D3径向树 · 层级导图 · ECharts径向</div>
+    </div>
+    <div class="db-card">
+      <div class="dbc-icon">🏷️</div><div class="dbc-title">L1–L5 五维分类</div>
+      <div class="dbc-desc">
+        <span class="tag">工艺领域</span><span class="tag">工艺方式</span><span class="tag">研究主题</span>
+        <span class="tag">应用场景</span><span class="tag">加工材料</span>
+      </div>
+    </div>
+    <div class="db-card">
+      <div class="dbc-icon">📊</div><div class="dbc-title">数据规模</div>
+      <div class="dbc-desc">1,247 篇论文 · 80+ 期刊会议 · 多源融合</div>
+    </div>
+    <div class="db-card clickable" onclick="navigateTo('../experiment.html')">
+      <div class="dbc-icon">🔬</div><div class="dbc-title">检索实验</div>
+      <div class="dbc-desc">Recall@5 +29% · MRR +30% · 工艺查询 +61%</div>
+    </div>
+  </aside>
+
+  <!-- CENTER: RAG Pipeline (biggest visual) -->
+  <main class="db-center">
+    <h3>RAG System Pipeline</h3>
+    <div class="pipeline-flow" id="pipelineFlow"></div>
+  </main>
+
+  <!-- RIGHT: Academic Ecosystem -->
+  <aside class="db-right">
+    <h3>Academic Ecosystem</h3>
+    <div class="db-mini-globe" id="miniGlobe">
+      <canvas id="miniGlobeCanvas"></canvas>
+    </div>
+    <div class="db-venue-list" id="dbVenueList"></div>
+    <div class="db-timeline-mini" id="dbTimelineMini"></div>
+  </aside>
+
+</div>
+
+<!-- ====== BOTTOM: Capability Cards ====== -->
+<footer class="db-bottom">
+  <div class="db-cap clickable" onclick="navigateTo('../index.html')">
+    <span class="dc-icon">🤖</span><strong>RAG 智能问答</strong>
+    <span>自然语言提问 · 论文引用溯源 · 千问生成回答</span>
+  </div>
+  <div class="db-cap">
+    <span class="dc-icon">🔧</span><strong>自动知识库构建</strong>
+    <span>Zotero + OpenAlex · LLM分类摘要 · 一键更新</span>
+  </div>
+  <div class="db-cap clickable" onclick="navigateTo('../index.html#kg')">
+    <span class="dc-icon">🌐</span><strong>多维可视化</strong>
+    <span>知识图谱 · 时间轴 · 3D地球 · 星系</span>
+  </div>
+  <div class="db-cap">
+    <span class="dc-icon">🔄</span><strong>动态更新</strong>
+    <span>增量爬取 · 自动入库 · SSE实时同步</span>
+  </div>
+</footer>
+
+</div>
+
+<script src="../d3.min.js"></script>
+<script src="../three.min.js"></script>
+<script src="dashboard.js"></script>
+</body>
+</html>

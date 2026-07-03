@@ -1,0 +1,103 @@
+{
+  "IJAMT": {
+    "website": "https://link.springer.com/journal/170",
+    "publisher": "Springer",
+    "scope": "先进制造技术全领域，涵盖磨削、切削、增材、数字化制造",
+    "impact_factor": "3.0 (2024)",
+    "frequency": "月刊",
+    "notes": "制造领域最广泛的SCI期刊之一"
+  },
+  "JMP": {
+    "website": "https://www.sciencedirect.com/journal/journal-of-manufacturing-processes",
+    "publisher": "Elsevier / SME",
+    "scope": "制造工艺全流程，包括材料去除、表面处理、过程监控",
+    "impact_factor": "5.6 (2024)",
+    "frequency": "月刊",
+    "notes": "SME会刊，制造工艺领域权威期刊"
+  },
+  "RCIM": {
+    "website": "https://www.sciencedirect.com/journal/robotics-and-computer-integrated-manufacturing",
+    "publisher": "Elsevier",
+    "scope": "机器人技术与计算机集成制造，覆盖工业机器人、自动化、智能工厂",
+    "impact_factor": "10.4 (2024)",
+    "frequency": "双月刊",
+    "notes": "机器人制造领域顶级期刊，影响因子破10"
+  },
+  "CJA": {
+    "website": "https://www.sciencedirect.com/journal/chinese-journal-of-aeronautics",
+    "publisher": "Elsevier / 中国航空学会",
+    "scope": "航空航天工程全领域，包括制造、材料、推进、结构",
+    "impact_factor": "5.3 (2024)",
+    "frequency": "月刊",
+    "notes": "中国航空学会会刊，SCI一区"
+  },
+  "TRIBINT": {
+    "website": "https://www.sciencedirect.com/journal/tribology-international",
+    "publisher": "Elsevier",
+    "scope": "摩擦学全领域：磨损、润滑、接触力学、表面工程",
+    "impact_factor": "6.1 (2024)",
+    "frequency": "月刊",
+    "notes": "摩擦学领域顶级期刊"
+  },
+  "TMECH": {
+    "website": "https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=3516",
+    "publisher": "IEEE/ASME",
+    "scope": "机电一体化：机器人、传感器、执行器、精密控制",
+    "impact_factor": "6.4 (2024)",
+    "frequency": "双月刊",
+    "notes": "IEEE/ASME联合出版，机电领域旗舰期刊"
+  },
+  "Wear": {
+    "website": "https://www.sciencedirect.com/journal/wear",
+    "publisher": "Elsevier",
+    "scope": "磨损机理、摩擦学、表面损伤、润滑",
+    "impact_factor": "5.0 (2024)",
+    "frequency": "半月刊",
+    "notes": "磨损研究领域最权威期刊"
+  },
+  "IEEE Access": {
+    "website": "https://ieeeaccess.ieee.org/",
+    "publisher": "IEEE",
+    "scope": "IEEE全领域开放获取期刊",
+    "impact_factor": "3.4 (2024)",
+    "frequency": "持续出版",
+    "notes": "OA期刊，审稿快"
+  },
+  "CIRP": {
+    "website": "https://www.sciencedirect.com/journal/cirp-annals",
+    "publisher": "Elsevier / CIRP",
+    "scope": "制造科学与技术前沿，CIRP年会论文",
+    "impact_factor": "4.3 (2024)",
+    "frequency": "半年刊",
+    "notes": "国际生产工程科学院(CIRP)会刊"
+  },
+  "JIM": {
+    "website": "https://link.springer.com/journal/10845",
+    "publisher": "Springer",
+    "scope": "智能制造：AI、物联网、数字孪生在制造中的应用",
+    "impact_factor": "8.3 (2024)",
+    "frequency": "月刊",
+    "notes": "智能制造领域顶级期刊"
+  },
+  "MMP": {
+    "website": "https://www.tandfonline.com/journals/lmmp20",
+    "publisher": "Taylor & Francis",
+    "scope": "材料加工与制造工艺",
+    "impact_factor": "4.1 (2024)",
+    "frequency": "双月刊"
+  },
+  "RAS": {
+    "website": "https://www.sciencedirect.com/journal/robotics-and-autonomous-systems",
+    "publisher": "Elsevier",
+    "scope": "自主机器人系统",
+    "impact_factor": "4.7 (2024)",
+    "frequency": "月刊"
+  },
+  "AST": {
+    "website": "https://www.sciencedirect.com/journal/aerospace-science-and-technology",
+    "publisher": "Elsevier",
+    "scope": "航空航天科学与技术",
+    "impact_factor": "5.0 (2024)",
+    "frequency": "月刊"
+  }
+}
