@@ -1,0 +1,1186 @@
+{
+  "geo_mapping": {
+    "THE_INTERNATIONAL_JOURNAL": {
+      "conference_id": "THE_INTERNATIONAL_JOURNAL",
+      "venue_name": "The International Journal of Advanced Manufacturing Technology",
+      "paper_count": 110,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 19,
+      "total_cities_found": 4,
+      "other_cities": [
+        {
+          "city": "Xi'an, China",
+          "papers": 5
+        },
+        {
+          "city": "Wuhan, China",
+          "papers": 4
+        },
+        {
+          "city": "Paris, France",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        1,
+        5,
+        12,
+        13,
+        33
+      ]
+    },
+    "JOURNAL_OF_MANUFACTURING": {
+      "conference_id": "JOURNAL_OF_MANUFACTURING",
+      "venue_name": "Journal of Manufacturing Science and Engineering",
+      "paper_count": 2,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        24,
+        573
+      ]
+    },
+    "ROBOTICS_AND_COMPUTER_INT": {
+      "conference_id": "ROBOTICS_AND_COMPUTER_INT",
+      "venue_name": "Robotics and Computer-Integrated Manufacturing",
+      "paper_count": 42,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 7,
+      "total_cities_found": 3,
+      "other_cities": [
+        {
+          "city": "Wuhan, China",
+          "papers": 6
+        },
+        {
+          "city": "Bari, Italy",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        2,
+        8,
+        9,
+        10,
+        18
+      ]
+    },
+    "MATERIALS": {
+      "conference_id": "MATERIALS",
+      "venue_name": "Materials",
+      "paper_count": 16,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Paris, France",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        101,
+        104,
+        189,
+        208,
+        292
+      ]
+    },
+    "IEEE_ASME_TRANSACTIONS_ON": {
+      "conference_id": "IEEE_ASME_TRANSACTIONS_ON",
+      "venue_name": "IEEE/ASME Transactions on Mechatronics",
+      "paper_count": 14,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 2,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Chongqing, China",
+          "papers": 2
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        26,
+        27,
+        69,
+        139,
+        176
+      ]
+    },
+    "IEEE_ACCESS": {
+      "conference_id": "IEEE_ACCESS",
+      "venue_name": "IEEE Access",
+      "paper_count": 13,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 4,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        47,
+        49,
+        59,
+        60,
+        270
+      ]
+    },
+    "WEAR": {
+      "conference_id": "WEAR",
+      "venue_name": "Wear",
+      "paper_count": 12,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 7,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        77,
+        83,
+        106,
+        117,
+        126
+      ]
+    },
+    "TRIBOLOGY_INTERNATIONAL": {
+      "conference_id": "TRIBOLOGY_INTERNATIONAL",
+      "venue_name": "Tribology International",
+      "paper_count": 11,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 3,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Wuhan, China",
+          "papers": 2
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        6,
+        7,
+        112,
+        137,
+        166
+      ]
+    },
+    "JOURNAL_OF_MATERIALS_PROC": {
+      "conference_id": "JOURNAL_OF_MATERIALS_PROC",
+      "venue_name": "Journal of Materials Processing Technology",
+      "paper_count": 11,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 3,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        91,
+        127,
+        144,
+        212,
+        261
+      ]
+    },
+    "CIRP_ANNALS": {
+      "conference_id": "CIRP",
+      "venue_name": "CIRP Annals",
+      "paper_count": 10,
+      "city": "Braunschweig",
+      "country": "Germany",
+      "lat": 52.2689,
+      "lng": 10.5268,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "venue_locations_verified",
+      "sample_paper_ids": [
+        28,
+        319,
+        323,
+        482,
+        507
+      ],
+      "publisher": "CIRP",
+      "locations": [
+        {
+          "year": 2025,
+          "city": "Braunschweig",
+          "country": "Germany",
+          "lat": 52.2689,
+          "lng": 10.5268
+        },
+        {
+          "year": 2024,
+          "city": "Capri",
+          "country": "Italy",
+          "lat": 40.55,
+          "lng": 14.2333
+        }
+      ],
+      "frequency": "年度"
+    },
+    "CHINESE_JOURNAL_OF_MECHAN": {
+      "conference_id": "CHINESE_JOURNAL_OF_MECHAN",
+      "venue_name": "Chinese Journal of Mechanical Engineering",
+      "paper_count": 9,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        80,
+        105,
+        211,
+        299,
+        468
+      ]
+    },
+    "MECHANICAL_SYSTEMS_AND_SI": {
+      "conference_id": "MECHANICAL_SYSTEMS_AND_SI",
+      "venue_name": "Mechanical Systems and Signal Processing",
+      "paper_count": 8,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 3,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        15,
+        17,
+        29,
+        251,
+        272
+      ]
+    },
+    "IEEE_TRANSACTIONS_ON_AUTO": {
+      "conference_id": "IEEE_TRANSACTIONS_ON_AUTO",
+      "venue_name": "IEEE Transactions on Automation Science and Engineering",
+      "paper_count": 8,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        31,
+        199,
+        344,
+        457,
+        555
+      ]
+    },
+    "MATERIALS_AND_MANUFACTURI": {
+      "conference_id": "MATERIALS_AND_MANUFACTURI",
+      "venue_name": "Materials and Manufacturing Processes",
+      "paper_count": 8,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 4,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        55,
+        78,
+        89,
+        100,
+        187
+      ]
+    },
+    "JOURNAL_OF_INTELLIGENT_MA": {
+      "conference_id": "JOURNAL_OF_INTELLIGENT_MA",
+      "venue_name": "Journal of Intelligent Manufacturing",
+      "paper_count": 8,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        134,
+        152,
+        174,
+        235,
+        291
+      ]
+    },
+    "CHINESE_JOURNAL_OF_AERONA": {
+      "conference_id": "CHINESE_JOURNAL_OF_AERONA",
+      "venue_name": "Chinese Journal of Aeronautics",
+      "paper_count": 7,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 4,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Wuhan, China",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        3,
+        74,
+        136,
+        151,
+        167
+      ]
+    },
+    "INTERNATIONAL_JOURNAL_OF": {
+      "conference_id": "INTERNATIONAL_JOURNAL_OF",
+      "venue_name": "International Journal of Precision Engineering and Manufacturing",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        161,
+        321
+      ]
+    },
+    "ADVANCES_IN_MECHANICAL_EN": {
+      "conference_id": "ADVANCES_IN_MECHANICAL_EN",
+      "venue_name": "Advances in Mechanical Engineering",
+      "paper_count": 6,
+      "city": "Xi'an",
+      "country": "China",
+      "lat": 34.3416,
+      "lng": 108.9398,
+      "city_paper_count": 2,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Chongqing, China",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        34,
+        35,
+        63,
+        227,
+        354
+      ]
+    },
+    "PROCEEDINGS_OF_THE_INSTIT": {
+      "conference_id": "PROCEEDINGS_OF_THE_INSTIT",
+      "venue_name": "Proceedings of the Institution of Mechanical Engineers, Part E: Journal of Process Mechanical Engineering",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        73
+      ]
+    },
+    "ENGINEERING_FAILURE_ANALY": {
+      "conference_id": "ENGINEERING_FAILURE_ANALY",
+      "venue_name": "Engineering Failure Analysis",
+      "paper_count": 5,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        115,
+        374,
+        381,
+        383,
+        1367
+      ]
+    },
+    "IEEE_TRANSACTIONS_ON_INDU": {
+      "conference_id": "IEEE_TRANSACTIONS_ON_INDU",
+      "venue_name": "IEEE Transactions on Industrial Electronics",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        165,
+        351
+      ]
+    },
+    "MEASUREMENT": {
+      "conference_id": "MEASUREMENT",
+      "venue_name": "Measurement",
+      "paper_count": 4,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Xi'an, China",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        41,
+        113,
+        131,
+        685
+      ]
+    },
+    "ADVANCED_ENGINEERING_INFO": {
+      "conference_id": "ADVANCED_ENGINEERING_INFO",
+      "venue_name": "Advanced Engineering Informatics",
+      "paper_count": 4,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 3,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        67,
+        140,
+        154,
+        1339
+      ]
+    },
+    "FRONTIERS_IN_MATERIALS": {
+      "conference_id": "FRONTIERS_IN_MATERIALS",
+      "venue_name": "Frontiers in Materials",
+      "paper_count": 4,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        168,
+        397,
+        631,
+        636
+      ]
+    },
+    "CERAMICS_INTERNATIONAL": {
+      "conference_id": "RAM",
+      "venue_name": "Ceramics International",
+      "paper_count": 3,
+      "city": "Singapore",
+      "country": "Singapore",
+      "lat": 1.3521,
+      "lng": 103.8198,
+      "city_paper_count": 2,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Wuhan, China",
+          "papers": 1
+        }
+      ],
+      "source": "venue_locations_verified",
+      "sample_paper_ids": [
+        11,
+        119,
+        124
+      ],
+      "publisher": "IEEE",
+      "locations": [
+        {
+          "year": 2025,
+          "city": "Singapore",
+          "country": "Singapore",
+          "lat": 1.3521,
+          "lng": 103.8198
+        }
+      ],
+      "frequency": "年度"
+    },
+    "OPTICS_AND_LASERS_IN_ENGI": {
+      "conference_id": "OPTICS_AND_LASERS_IN_ENGI",
+      "venue_name": "Optics and Lasers in Engineering",
+      "paper_count": 3,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 1,
+      "total_cities_found": 2,
+      "other_cities": [
+        {
+          "city": "Chongqing, China",
+          "papers": 1
+        }
+      ],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        19,
+        109,
+        491
+      ]
+    },
+    "FRONTIERS_OF_MECHANICAL_E": {
+      "conference_id": "FRONTIERS_OF_MECHANICAL_E",
+      "venue_name": "Frontiers of Mechanical Engineering",
+      "paper_count": 3,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        30,
+        414,
+        421
+      ]
+    },
+    "ARCHIVES_OF_CIVIL_AND_MEC": {
+      "conference_id": "ARCHIVES_OF_CIVIL_AND_MEC",
+      "venue_name": "Archives of Civil and Mechanical Engineering",
+      "paper_count": 3,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        90,
+        250,
+        263
+      ]
+    },
+    "JOURNAL_OF_ALLOYS_AND_COM": {
+      "conference_id": "JOURNAL_OF_ALLOYS_AND_COM",
+      "venue_name": "Journal of Alloys and Compounds",
+      "paper_count": 3,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        135,
+        1368,
+        1369
+      ]
+    },
+    "IEEE_TRANSACTIONS_ON_INST": {
+      "conference_id": "IEEE_TRANSACTIONS_ON_INST",
+      "venue_name": "IEEE Transactions on Instrumentation and Measurement",
+      "paper_count": 2,
+      "city": "Wuhan",
+      "country": "China",
+      "lat": 30.5928,
+      "lng": 114.3055,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        32,
+        342
+      ]
+    },
+    "CRYSTALS": {
+      "conference_id": "CRYSTALS",
+      "venue_name": "Crystals",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        52,
+        1378
+      ]
+    },
+    "ROBOTICS_AND_AUTONOMOUS_S": {
+      "conference_id": "ROBOTICS_AND_AUTONOMOUS_S",
+      "venue_name": "Robotics and Autonomous Systems",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        65,
+        527
+      ]
+    },
+    "ISA_TRANSACTIONS": {
+      "conference_id": "ISA_TRANSACTIONS",
+      "venue_name": "ISA Transactions",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        71,
+        164
+      ]
+    },
+    "COMPUTERS_IN_INDUSTRY": {
+      "conference_id": "COMPUTERS_IN_INDUSTRY",
+      "venue_name": "Computers in Industry",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        87,
+        143
+      ]
+    },
+    "MATERIALS___DESIGN": {
+      "conference_id": "MATERIALS___DESIGN",
+      "venue_name": "Materials & Design",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        108,
+        1365
+      ]
+    },
+    "COMPOSITE_STRUCTURES": {
+      "conference_id": "COMPOSITE_STRUCTURES",
+      "venue_name": "Composite Structures",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        118,
+        129
+      ]
+    },
+    "APPLIED_SURFACE_SCIENCE": {
+      "conference_id": "APPLIED_SURFACE_SCIENCE",
+      "venue_name": "Applied Surface Science",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        120,
+        133
+      ]
+    },
+    "JOURNAL_OF_BIONIC_ENGINEE": {
+      "conference_id": "JOURNAL_OF_BIONIC_ENGINEE",
+      "venue_name": "Journal of Bionic Engineering",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        123,
+        148
+      ]
+    },
+    "JOURNAL_OF_THE_BRAZILIAN": {
+      "conference_id": "JOURNAL_OF_THE_BRAZILIAN",
+      "venue_name": "Journal of the Brazilian Society of Mechanical Sciences and Engineering",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        141,
+        363
+      ]
+    },
+    "AEROSPACE_SCIENCE_AND_TEC": {
+      "conference_id": "AEROSPACE_SCIENCE_AND_TEC",
+      "venue_name": "Aerospace Science and Technology",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 2,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        147,
+        163
+      ]
+    },
+    "JOURNAL_OF_THE_EUROPEAN_C": {
+      "conference_id": "JOURNAL_OF_THE_EUROPEAN_C",
+      "venue_name": "Journal of the European Ceramic Society",
+      "paper_count": 2,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        158,
+        1255
+      ]
+    },
+    "ELECTRONICS": {
+      "conference_id": "ELECTRONICS",
+      "venue_name": "Electronics",
+      "paper_count": 2,
+      "city": "Rome",
+      "country": "Italy",
+      "lat": 41.9028,
+      "lng": 12.4964,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        258,
+        488
+      ]
+    },
+    "RUSSIAN_ENGINEERING_RESEA": {
+      "conference_id": "RUSSIAN_ENGINEERING_RESEA",
+      "venue_name": "Russian Engineering Research",
+      "paper_count": 2,
+      "city": "Paris",
+      "country": "France",
+      "lat": 48.8566,
+      "lng": 2.3522,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        1430,
+        1434
+      ]
+    },
+    "JOURNAL_OF_MECHANICAL_SCI": {
+      "conference_id": "JOURNAL_OF_MECHANICAL_SCI",
+      "venue_name": "Journal of Mechanical Science and Technology",
+      "paper_count": 1,
+      "city": "Xi'an",
+      "country": "China",
+      "lat": 34.3416,
+      "lng": 108.9398,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        38
+      ]
+    },
+    "TRANSACTIONS_OF_THE_CANAD": {
+      "conference_id": "TRANSACTIONS_OF_THE_CANAD",
+      "venue_name": "Transactions of the Canadian Society for Mechanical Engineering",
+      "paper_count": 1,
+      "city": "Xi'an",
+      "country": "China",
+      "lat": 34.3416,
+      "lng": 108.9398,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        46
+      ]
+    },
+    "DIAMOND_AND_RELATED_MATER": {
+      "conference_id": "DIAMOND_AND_RELATED_MATER",
+      "venue_name": "Diamond and Related Materials",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        68
+      ]
+    },
+    "INTERNATIONAL_JOURNAL_FOR": {
+      "conference_id": "INTERNATIONAL_JOURNAL_FOR",
+      "venue_name": "International Journal for Numerical Methods in Engineering",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        75
+      ]
+    },
+    "VOLUME_2A__ADVANCED_MANUF": {
+      "conference_id": "VOLUME_2A__ADVANCED_MANUF",
+      "venue_name": "Volume 2A: Advanced Manufacturing",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        82
+      ]
+    },
+    "APPLIED_THERMAL_ENGINEERI": {
+      "conference_id": "APPLIED_THERMAL_ENGINEERI",
+      "venue_name": "Applied Thermal Engineering",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        114
+      ]
+    },
+    "APPLIED_SOFT_COMPUTING": {
+      "conference_id": "APPLIED_SOFT_COMPUTING",
+      "venue_name": "Applied Soft Computing",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        116
+      ]
+    },
+    "CASE_STUDIES_IN_THERMAL_E": {
+      "conference_id": "CASE",
+      "venue_name": "Case Studies in Thermal Engineering",
+      "paper_count": 1,
+      "city": "Los Angeles",
+      "country": "USA",
+      "lat": 34.0522,
+      "lng": -118.2437,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "venue_locations_verified",
+      "sample_paper_ids": [
+        122
+      ],
+      "publisher": "IEEE",
+      "locations": [
+        {
+          "year": 2025,
+          "city": "Los Angeles",
+          "country": "USA",
+          "lat": 34.0522,
+          "lng": -118.2437
+        },
+        {
+          "year": 2024,
+          "city": "Bari",
+          "country": "Italy",
+          "lat": 41.1171,
+          "lng": 16.8719
+        },
+        {
+          "year": 2023,
+          "city": "Auckland",
+          "country": "New Zealand",
+          "lat": -36.8485,
+          "lng": 174.7633
+        },
+        {
+          "year": 2022,
+          "city": "Mexico City",
+          "country": "Mexico",
+          "lat": 19.4326,
+          "lng": -99.1332
+        }
+      ],
+      "frequency": "年度"
+    },
+    "FRICTION": {
+      "conference_id": "FRICTION",
+      "venue_name": "Friction",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        132
+      ]
+    },
+    "CONTROL_ENGINEERING_PRACT": {
+      "conference_id": "CONTROL_ENGINEERING_PRACT",
+      "venue_name": "Control Engineering Practice",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        150
+      ]
+    },
+    "ICAS_PROCEEDINGS": {
+      "conference_id": "ICAS_PROCEEDINGS",
+      "venue_name": "ICAS Proceedings",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        155
+      ]
+    },
+    "ENGINEERING_FRACTURE_MECH": {
+      "conference_id": "ENGINEERING_FRACTURE_MECH",
+      "venue_name": "Engineering Fracture Mechanics",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        157
+      ]
+    },
+    "COMPOSITE_DESIGN_AND_MANU": {
+      "conference_id": "COMPOSITE_DESIGN_AND_MANU",
+      "venue_name": "Composite Design and Manufacturing",
+      "paper_count": 1,
+      "city": "Chongqing",
+      "country": "China",
+      "lat": 29.4316,
+      "lng": 106.9123,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        169
+      ]
+    },
+    "ADVANCED_ENGINEERING_MATE": {
+      "conference_id": "ADVANCED_ENGINEERING_MATE",
+      "venue_name": "Advanced Engineering Materials",
+      "paper_count": 1,
+      "city": "Rome",
+      "country": "Italy",
+      "lat": 41.9028,
+      "lng": 12.4964,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        513
+      ]
+    },
+    "APPLIED_MECHANICS_REVIEWS": {
+      "conference_id": "APPLIED_MECHANICS_REVIEWS",
+      "venue_name": "Applied Mechanics Reviews",
+      "paper_count": 1,
+      "city": "Paris",
+      "country": "France",
+      "lat": 48.8566,
+      "lng": 2.3522,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        1396
+      ]
+    },
+    "MODELING_IDENTIFICATION_A": {
+      "conference_id": "MODELING_IDENTIFICATION_A",
+      "venue_name": "Modeling Identification and Control A Norwegian Research Bulletin",
+      "paper_count": 1,
+      "city": "Rome",
+      "country": "Italy",
+      "lat": 41.9028,
+      "lng": 12.4964,
+      "city_paper_count": 1,
+      "total_cities_found": 1,
+      "other_cities": [],
+      "source": "paper_data_inferred",
+      "sample_paper_ids": [
+        1404
+      ]
+    }
+  },
+  "total_mapped": 59,
+  "canonical_matched": 3,
+  "pending_geo_resolution": [],
+  "_meta": {
+    "papers_analyzed": 1378,
+    "unique_venues": 286,
+    "mapped": 59,
+    "pending": 0,
+    "city_cache_size": 82,
+    "source": "paper_data"
+  }
+}

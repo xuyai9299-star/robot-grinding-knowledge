@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SRTP 答辩流程图 — 机器人柔性磨削 RAG 知识问答系统</title>
+<style>
+:root {
+  --bg: #0a0e1a; --card: rgba(255,255,255,0.04);
+  --text: #e8eaed; --muted: #9aa0a6; --accent: #4cc9f0;
+  --green: #34d399; --cyan: #22D3EE; --indigo: #6366F1; --purple: #818cf8;
+  --border: rgba(255,255,255,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);padding:24px 16px;line-height:1.6}
+.container{max-width:1200px;margin:0 auto}
+h1{text-align:center;font-size:1.6rem;font-weight:800;margin-bottom:4px;background:linear-gradient(135deg,#fff 0%,#a0c4ff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h1 .sub{display:block;font-size:0.85rem;color:var(--muted);-webkit-text-fill-color:var(--muted);font-weight:400;margin-top:2px}
+h2{font-size:1.15rem;font-weight:700;margin:32px 0 12px;color:var(--accent);border-left:3px solid var(--accent);padding-left:12px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin:12px 0 24px;font-size:0.73rem}
+.legend span{display:flex;align-items:center;gap:4px}
+.legend .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+.flow-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px;overflow-x:auto}
+.flow-section h3{font-size:0.95rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.flow-section h3 .tag{font-size:0.62rem;padding:2px 8px;border-radius:10px;font-weight:600}
+.tag-heavy{background:rgba(99,102,241,0.2);color:var(--indigo)}
+.tag-medium{background:rgba(34,211,238,0.2);color:var(--cyan)}
+.tag-light{background:rgba(76,201,240,0.15);color:var(--accent)}
+
+.flow-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;justify-content:center}
+.flow-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px;text-align:center;min-width:100px;max-width:220px;flex:1}
+.flow-box.core{border-color:rgba(255,107,107,0.4);background:rgba(255,107,107,0.05)}
+.flow-box.method{border-color:rgba(255,209,102,0.4);background:rgba(255,209,102,0.05)}
+.flow-box.result{border-color:rgba(6,214,160,0.4);background:rgba(6,214,160,0.05)}
+.flow-box .fb-icon{font-size:1.4rem;margin-bottom:6px}
+.flow-box .fb-title{font-weight:600;font-size:0.8rem;margin-bottom:3px}
+.flow-box .fb-desc{font-size:0.65rem;color:var(--muted);line-height:1.4}
+.flow-arrow{display:flex;align-items:center;color:var(--muted);font-size:1.2rem;flex-shrink:0;padding:0 2px}
+
+.data-table{width:100%;border-collapse:collapse;font-size:0.73rem;margin-top:8px}
+.data-table th{text-align:left;padding:8px 10px;background:rgba(255,255,255,0.03);color:var(--muted);font-weight:600;font-size:0.68rem;border-bottom:1px solid var(--border)}
+.data-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.data-table .val{font-weight:700;color:var(--green)}
+.data-table .improve{color:var(--cyan);font-weight:600}
+
+.mermaid-wrap{background:rgba(255,255,255,0.02);border-radius:12px;padding:16px;overflow-x:auto;display:flex;justify-content:center}
+.mermaid-wrap .mermaid{min-width:600px}
+
+.pain-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.pain-card{background:rgba(255,107,107,0.04);border:1px solid rgba(255,107,107,0.2);border-radius:10px;padding:14px}
+.pain-card .pc-num{font-size:1.5rem;font-weight:800;color:var(--indigo);margin-bottom:4px}
+.pain-card .pc-title{font-weight:600;font-size:0.8rem;margin-bottom:4px}
+.pain-card .pc-desc{font-size:0.68rem;color:var(--muted)}
+
+.solution-row{display:flex;gap:12px;flex-wrap:wrap}
+.solution-card{flex:1;min-width:180px;background:rgba(6,214,160,0.04);border:1px solid rgba(6,214,160,0.2);border-radius:10px;padding:14px}
+.solution-card .sc-icon{font-size:1.2rem;margin-bottom:6px}
+.solution-card .sc-title{font-weight:600;font-size:0.8rem;margin-bottom:4px;color:var(--green)}
+.solution-card .sc-desc{font-size:0.68rem;color:var(--muted)}
+
+.note{background:rgba(34,211,238,0.05);border:1px solid rgba(34,211,238,0.15);border-radius:10px;padding:12px 16px;margin-top:16px;font-size:0.72rem;color:var(--cyan)}
+
+@media print {
+  body{background:#fff;color:#000}
+  .flow-section{break-inside:avoid;border-color:#ddd}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true,theme:'dark',themeVariables:{primaryColor:'#4cc9f0',primaryTextColor:'#fff',lineColor:'#4cc9f0',fontSize:'14px'}})</script>
+</head>
+<body>
+<div class="container">
+
+<h1>机器人柔性磨削 RAG 知识问答系统<span class="sub">SRTP 结题答辩 · 项目全流程架构图</span></h1>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--indigo)"></span> 核心创新/重难点</span>
+  <span><span class="dot" style="background:var(--cyan)"></span> 方法论/技术路径</span>
+  <span><span class="dot" style="background:var(--accent)"></span> 成果展示/辅助</span>
+</div>
+
+<!-- ===== 板块0：研究动机 ===== -->
+<h2>零 · 研究动机：为什么做这个项目？</h2>
+<div class="flow-section">
+  <h3>🎯 痛点 → 方案<span class="tag tag-heavy">答辩开场 1 分钟</span></h3>
+  <div class="pain-cards">
+    <div class="pain-card">
+      <div class="pc-num">🔴 痛点 1</div>
+      <div class="pc-title">知识碎片化</div>
+      <div class="pc-desc">机器人磨削知识分散于学术论文、技术报告、企业内部文档，检索效率低</div>
+    </div>
+    <div class="pain-card">
+      <div class="pc-num">🔴 痛点 2</div>
+      <div class="pc-title">通用 LLM 幻觉</div>
+      <div class="pc-desc">ChatGPT 等通用模型在专业领域生成看似合理但实际错误的回答</div>
+    </div>
+    <div class="pain-card">
+      <div class="pc-num">🔴 痛点 3</div>
+      <div class="pc-title">领域知识无结构</div>
+      <div class="pc-desc">传统论文检索只有关键词匹配，缺乏多维分类导航和关系图谱</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:16px">
+    <span style="font-size:1.2rem">⬇</span>
+    <div style="font-weight:700;color:var(--green);font-size:0.95rem">RAG 检索增强生成 + 五维结构化知识库</div>
+  </div>
+</div>
+
+<!-- ===== 板块1：总架构 ===== -->
+<h2>一 · 项目总架构（一张图看懂全貌）</h2>
+<div class="flow-section">
+  <h3>🏗️ 系统全景<span class="tag tag-heavy">核心 · 答辩重点</span></h3>
+  <div class="mermaid-wrap"><div class="mermaid">
+flowchart TB
+    subgraph INPUT["📥 数据采集层"]
+        A1["🏫 Zotero 文献库<br/>华中科大·西北工大·重庆大学<br/>172篇结构化导出"]
+        A2["🌐 OpenAlex API<br/>2.5亿学术作品<br/>20组关键词爬取"]
+    end
+
+    subgraph PIPELINE["⚙️ 知识构建管线（Python 自动化）"]
+        B1["📋 解析<br/>zotero_parser.py"]
+        B2["🕷️ 爬取<br/>crawl_papers.py"]
+        B3["🔗 DOI去重合并<br/>1247篇主数据集"]
+        B4["✍️ 百炼千问 LLM<br/>中文摘要+关键词"]
+    end
+
+    subgraph TAXONOMY["🏷️ 五维分类引擎"]
+        C1["L1 工艺领域<br/>机器人磨削/非机器人"]
+        C2["L2 工艺方式<br/>砂带/抛光/磁盘"]
+        C3["L3 研究主题<br/>10个子类"]
+        C4["L4 应用场景<br/>航空/船舶/汽车"]
+        C5["L5 加工材料<br/>钛合金/高温合金/陶瓷"]
+    end
+
+    subgraph RETRIEVAL["🔍 检索策略（核心创新）"]
+        D1["策略1: 朴素BM25<br/>全文词频匹配"]
+        D2["策略2: 结构化过滤<br/>五维标签约束"]
+        D3["策略3: 混合加权<br/>分类+摘要加成"]
+        D4["📊 对比实验<br/>20题×4类×3策略"]
+    end
+
+    subgraph RAG["🤖 RAG 问答管线"]
+        E1["用户提问"]
+        E2["Embedding<br/>text-embedding-v3"]
+        E3["ChromaDB 向量检索<br/>Top-20"]
+        E4["结构化重排序<br/>+摘要加权"]
+        E5["千问 qwen-plus<br/>生成回答"]
+    end
+
+    subgraph VIZ["🖥️ 可视化系统（6种工具）"]
+        F1["D3径向树"]
+        F2["层级导图"]
+        F3["ECharts径向"]
+        F4["3D知识星系"]
+        F5["3D会议地球"]
+        F6["研究时间轴"]
+    end
+
+    A1 --> B1 --> B3
+    A2 --> B2 --> B3
+    B3 --> B4 --> TAXONOMY
+    TAXONOMY --> RETRIEVAL
+    RETRIEVAL --> RAG
+    E1 --> E2 --> E3 --> E4 --> E5
+    TAXONOMY --> VIZ
+
+    style INPUT fill:#1e3a5f,stroke:#4cc9f0
+    style PIPELINE fill:#162447,stroke:#22D3EE
+    style TAXONOMY fill:#162447,stroke:#a78bfa
+    style RETRIEVAL fill:#1a0a1e,stroke:#6366F1
+    style RAG fill:#0a1e1a,stroke:#06d6a0
+    style VIZ fill:#1e3a5f,stroke:#3B82F6
+  </div></div>
+</div>
+
+<!-- ===== 板块2：数据管线 ===== -->
+<h2>二 · 从零到 1247 篇：自动化知识库构建管线</h2>
+<div class="flow-section">
+  <h3>📡 数据采集 → 处理 → 入库<span class="tag tag-heavy">重 · 数据管线</span></h3>
+  <div class="flow-row">
+    <div class="flow-box core">
+      <div class="fb-icon">📤</div>
+      <div class="fb-title">Zotero 导出</div>
+      <div class="fb-desc">3所高校文献库<br/>CSV结构化元数据<br/>172篇基础论文</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box core">
+      <div class="fb-icon">🕷️</div>
+      <div class="fb-title">OpenAlex 爬取</div>
+      <div class="fb-desc">20组中英关键词<br/>倒排索引还原摘要<br/>DOI+标题去重</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box method">
+      <div class="fb-icon">🤖</div>
+      <div class="fb-title">百炼千问增强</div>
+      <div class="fb-desc">英文→中文摘要<br/>6个中文关键词<br/>相关性评分1-5</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box method">
+      <div class="fb-icon">🏷️</div>
+      <div class="fb-title">五维自动分类</div>
+      <div class="fb-desc">关键词规则匹配<br/>文本回退兜底<br/>生成思维导图路径</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box result">
+      <div class="fb-icon">💾</div>
+      <div class="fb-title">知识库主数据</div>
+      <div class="fb-desc">papers_enriched_updated.json<br/>1247篇 · 80+期刊<br/>1988-2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 板块3：五维分类 ===== -->
+<h2>三 · 五维结构化知识分类体系</h2>
+<div class="flow-section">
+  <h3>🏷️ L1 → L5 层级分类<span class="tag tag-medium">中 · 方法论</span></h3>
+  <div class="mermaid-wrap"><div class="mermaid">
+flowchart LR
+    ROOT["🤖 机器人柔性磨削<br/>知识库 · 1247篇"] --> L1_1["L1 机器人磨削/抛光<br/>850+篇"]
+    ROOT --> L1_2["L1 非机器人专用磨削<br/>300+篇"]
+    L1_1 --> L2_1["L2 砂带/带式磨削<br/>500+篇"]
+    L1_1 --> L2_2["L2 抛光<br/>200+篇"]
+    L1_1 --> L2_3["L2 磁盘/其他<br/>100+篇"]
+    L2_1 --> L3_1["L3 力/位控制"]
+    L2_1 --> L3_2["L3 表面质量与完整性"]
+    L2_1 --> L3_3["L3 材料去除与机理"]
+    L2_1 --> L3_4["L3 轨迹与路径规划"]
+    L2_1 --> L3_5["L3 工艺优化与智能方法"]
+    L3_1 --> L4["L4 应用场景: 航空航天/船舶/汽车/医学…"]
+    L3_1 --> L5["L5 加工材料: 钛合金/高温合金/陶瓷/钢…"]
+
+    style ROOT fill:#22D3EE,stroke:#3B82F6,color:#000
+    style L4 fill:#a78bfa,stroke:#7b5cfc
+    style L5 fill:#6366F1,stroke:#818cf8
+  </div></div>
+  <div class="solution-row" style="margin-top:12px">
+    <div class="solution-card">
+      <div class="sc-icon">🌐</div>
+      <div class="sc-title">中英双语关键词映射</div>
+      <div class="sc-desc">每层每个分类含 10-30 个中英文关键词，覆盖中英论文的标题/摘要/关键词</div>
+    </div>
+    <div class="solution-card">
+      <div class="sc-icon">🔄</div>
+      <div class="sc-title">双重分类策略</div>
+      <div class="sc-desc">优先关键词匹配 → 无关键词时回退到标题+摘要+venue 文本匹配，覆盖率 100%</div>
+    </div>
+    <div class="solution-card">
+      <div class="sc-icon">📂</div>
+      <div class="sc-title">多标签支持</div>
+      <div class="sc-desc">一篇论文可挂多个 L3 研究主题（如同时涉及力控制+表面质量），更真实反映交叉研究</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 板块4：检索策略对比 ===== -->
+<h2>四 · 检索策略对比实验（核心创新）</h2>
+<div class="flow-section">
+  <h3>🔬 三种策略 × 20题 × 4类问题<span class="tag tag-heavy">重 · 核心创新点</span></h3>
+  <div class="flow-row">
+    <div class="flow-box" style="border-color:rgba(255,255,255,0.15)">
+      <div class="fb-icon">1️⃣</div>
+      <div class="fb-title">朴素 BM25</div>
+      <div class="fb-desc">对用户查询分词<br/>全量论文词频匹配<br/>无领域知识利用</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box method">
+      <div class="fb-icon">2️⃣</div>
+      <div class="fb-title">结构化过滤</div>
+      <div class="fb-desc">先判定查询的 L1-L3 类别<br/>在匹配类别子集内 BM25<br/>分类命中 +0.5 加成</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box core">
+      <div class="fb-icon">3️⃣</div>
+      <div class="fb-title">混合加权检索</div>
+      <div class="fb-desc">分类命中 +0.8 加成<br/>摘要关键词命中 +0.3<br/>最终分数 = BM25 × (1+bonus)</div>
+    </div>
+  </div>
+
+  <table class="data-table" style="margin-top:16px">
+    <thead><tr><th>策略</th><th>Recall@5</th><th>Recall@10</th><th>MRR</th><th>工艺查询提升</th></tr></thead>
+    <tbody>
+      <tr><td>朴素 BM25（全文检索）</td><td>10.5%</td><td>16.8%</td><td>0.391</td><td>—</td></tr>
+      <tr><td>结构化（分类过滤+BM25）</td><td>12.1%</td><td>19.2%</td><td>0.448</td><td>+36%</td></tr>
+      <tr><td><strong>混合（分类+摘要加权）</strong></td><td class="val">13.5%</td><td class="val">21.3%</td><td class="val">0.507</td><td class="improve">+61%</td></tr>
+    </tbody>
+  </table>
+  <div class="note">
+    💡 <strong>答辩要点</strong>：混合检索 vs 朴素 BM25 — Recall@5 提升 29%，MRR 提升 30%。<br/>
+    工艺查询类提升最显著（+61%），因为工艺查询最能受益于五维分类的结构化过滤。<br/>
+    这证明了<b>领域知识结构对 RAG 检索质量有显著增强效果</b>——这是本项目最核心的学术贡献。
+  </div>
+</div>
+
+<!-- ===== 板块5：RAG 系统架构 ===== -->
+<h2>五 · RAG 检索增强生成系统架构</h2>
+<div class="flow-section">
+  <h3>🤖 Embedding → 检索 → 重排序 → 生成<span class="tag tag-medium">中 · 系统架构</span></h3>
+  <div class="flow-row">
+    <div class="flow-box">
+      <div class="fb-icon">❓</div>
+      <div class="fb-title">1. 用户提问</div>
+      <div class="fb-desc">"钛合金叶片磨削如何<br/>控制表面粗糙度？"</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box method">
+      <div class="fb-icon">🧮</div>
+      <div class="fb-title">2. Embedding 向量化</div>
+      <div class="fb-desc">百炼 text-embedding-v3<br/>1024 维向量</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box method">
+      <div class="fb-icon">🗄️</div>
+      <div class="fb-title">3. ChromaDB 检索</div>
+      <div class="fb-desc">余弦相似度匹配<br/>返回 Top-20 论文</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box core">
+      <div class="fb-icon">🎯</div>
+      <div class="fb-title">4. 结构化重排序</div>
+      <div class="fb-desc">五维标签命中 +0.8<br/>摘要命中关键词 +0.3<br/>Top-20 → Top-5</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box core">
+      <div class="fb-icon">✍️</div>
+      <div class="fb-title">5. 千问生成回答</div>
+      <div class="fb-desc">拼接 Top-5 论文摘要<br/>Prompt 模板包装<br/>生成带引用的回答</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box result">
+      <div class="fb-icon">📝</div>
+      <div class="fb-title">6. 用户获得答案</div>
+      <div class="fb-desc">含论文引用标注<br/>[#7][#15][#24]<br/>可追溯原文 DOI</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 板块6：可视化 ===== -->
+<h2>六 · 多维知识可视化探索系统</h2>
+<div class="flow-section">
+  <h3>🖥️ 6 种可视化工具 + 10 个独立页面<span class="tag tag-light">轻 · 成果展示</span></h3>
+  <div class="flow-row">
+    <div class="flow-box result">
+      <div class="fb-icon">🧠</div>
+      <div class="fb-title">D3 径向树</div>
+      <div class="fb-desc">展开/折叠节点<br/>搜索定位高亮</div>
+    </div>
+    <div class="flow-box result">
+      <div class="fb-icon">📊</div>
+      <div class="fb-title">vis-network 层级导图</div>
+      <div class="fb-desc">左右展开<br/>交互式浏览</div>
+    </div>
+    <div class="flow-box result">
+      <div class="fb-icon">🎯</div>
+      <div class="fb-title">ECharts 径向树</div>
+      <div class="fb-desc">字号层级递减<br/>视觉层次清晰</div>
+    </div>
+    <div class="flow-box result">
+      <div class="fb-icon">🪐</div>
+      <div class="fb-title">3D 知识星系</div>
+      <div class="fb-desc">太阳+轨道+<br/>论文粒子旋转</div>
+    </div>
+    <div class="flow-box result">
+      <div class="fb-icon">🌍</div>
+      <div class="fb-title">3D 会议地球</div>
+      <div class="fb-desc">80+会议标注<br/>拖拽旋转缩放</div>
+    </div>
+    <div class="flow-box result">
+      <div class="fb-icon">⏳</div>
+      <div class="fb-title">研究时间轴</div>
+      <div class="fb-desc">1988-2026<br/>研究方向演变</div>
+    </div>
+  </div>
+  <div class="note">
+    📸 <strong>截屏建议</strong>：打开已部署的云端地址或本地 <code>http://localhost:8765</code>，<br/>
+    依次访问 index.html → taxonomy_tree.html → d3_mindmap.html → mindmaps.html → radial.html → galaxy.html → conferences/ → timeline.html → experiment.html → search.html → outline.html
+  </div>
+</div>
+
+<!-- ===== 板块7：创新点总结 ===== -->
+<h2>七 · 核心创新点总结（答辩收尾）</h2>
+<div class="flow-section">
+  <div class="solution-row">
+    <div class="solution-card" style="border-color:rgba(99,102,241,0.4);background:rgba(99,102,241,0.05)">
+      <div class="sc-icon">💡 创新 1</div>
+      <div class="sc-title" style="color:var(--indigo)">五维结构化知识分类体系</div>
+      <div class="sc-desc">L1→L5 层级组织，中英双语关键词映射，多标签支持，为结构化检索提供知识基础</div>
+    </div>
+    <div class="solution-card" style="border-color:rgba(99,102,241,0.4);background:rgba(99,102,241,0.05)">
+      <div class="sc-icon">💡 创新 2</div>
+      <div class="sc-title" style="color:var(--indigo)">基于领域分类的混合检索策略</div>
+      <div class="sc-desc">五维分类过滤 + 语义向量匹配 + 摘要加权重排序，Recall@5 提升 29%，工艺查询提升 61%</div>
+    </div>
+    <div class="solution-card" style="border-color:rgba(34,211,238,0.4);background:rgba(34,211,238,0.05)">
+      <div class="sc-icon">💡 创新 3</div>
+      <div class="sc-title" style="color:var(--cyan)">多源自动化知识库构建管线</div>
+      <div class="sc-desc">Zotero + OpenAlex + 百炼千问 → 自动分类 → 前端可视化，全流程 Python 自动化，可持续更新</div>
+    </div>
+    <div class="solution-card" style="border-color:rgba(34,211,238,0.4);background:rgba(34,211,238,0.05)">
+      <div class="sc-icon">💡 创新 4</div>
+      <div class="sc-title" style="color:var(--cyan)">多维知识可视化探索系统</div>
+      <div class="sc-desc">6 种交互式可视化工具，突破传统论文检索单一列表展示的局限，零 CDN 依赖</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 板块8：问题→方案映射 ===== -->
+<h2>八 · 问题 → 方案 → 验证 完整链路</h2>
+<div class="flow-section">
+  <h3>🔗 一站式叙事线（答辩核心逻辑）<span class="tag tag-heavy">答辩主线</span></h3>
+  <div class="mermaid-wrap"><div class="mermaid">
+flowchart LR
+    P1["🔴 问题1<br/>知识碎片化"] --> S1["✅ 方案1<br/>1247篇结构化知识库"]
+    P2["🔴 问题2<br/>LLM 幻觉"] --> S2["✅ 方案2<br/>RAG 检索增强生成"]
+    P3["🔴 问题3<br/>领域无结构"] --> S3["✅ 方案3<br/>五维分类+可视化"]
+
+    S1 --> V1["📊 验证1<br/>知识覆盖率 100%<br/>80+期刊/会议"]
+    S2 --> V2["📊 验证2<br/>Recall@5 提升 29%<br/>MRR 提升 30%"]
+    S3 --> V3["📊 验证3<br/>6种可视化工具<br/>10个交互页面"]
+
+    style P1 fill:#4338ca,stroke:#6366F1,color:#fff
+    style P2 fill:#4338ca,stroke:#6366F1,color:#fff
+    style P3 fill:#4338ca,stroke:#6366F1,color:#fff
+    style S1 fill:#14532d,stroke:#22c55e,color:#fff
+    style S2 fill:#14532d,stroke:#22c55e,color:#fff
+    style S3 fill:#14532d,stroke:#22c55e,color:#fff
+    style V1 fill:#1e3a5f,stroke:#3b82f6,color:#fff
+    style V2 fill:#1e3a5f,stroke:#3b82f6,color:#fff
+    style V3 fill:#1e3a5f,stroke:#3b82f6,color:#fff
+  </div></div>
+</div>
+
+<div style="text-align:center;padding:40px 0;color:var(--muted);font-size:0.75rem">
+  🤖 机器人柔性磨削知识库 · SRTP 结题答辩 · 2025年6月<br/>
+  此页面可用浏览器打开 → <code>Win+Shift+S</code> 截取各板块 → 放入 PPT
+</div>
+
+</div>
+</body>
+</html>

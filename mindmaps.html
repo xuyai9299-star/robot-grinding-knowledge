@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <title>思维导图 — Dark Neural System</title>
+  <style>
+    :root { --bg:#050B1F; --panel:rgba(255,255,255,0.03); --text:#e8eaed; --muted:#7c84a0; --accent:#22D3EE; --blue:#3B82F6; --indigo:#6366F1; --border:rgba(255,255,255,0.08); --border-glow:rgba(34,211,238,0.2); }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; color:var(--text); }
+    .topbar { display:flex; align-items:center; gap:10px; padding:6px 14px; background:rgba(5,11,31,0.9); border-bottom:1px solid var(--border); flex-shrink:0; flex-wrap:wrap; z-index:100; backdrop-filter:blur(12px); }
+    .topbar h1 { font-size:0.95rem; color:var(--accent); white-space:nowrap; }
+    .topbar nav { display:flex; gap:4px; flex-wrap:wrap; }
+    .topbar nav a { font-size:0.73rem; padding:4px 10px; border-radius:4px; text-decoration:none; color:var(--muted); border:1px solid var(--border); transition:all 0.15s; }
+    .topbar nav a:hover, .topbar nav a.on { color:var(--accent); border-color:var(--border-glow); background:rgba(34,211,238,0.06); }
+    .topbar .info { font-size:0.72rem; color:var(--muted); margin-left:auto; }
+    .main { display:flex; flex:1; overflow:hidden; }
+    .tabs { width:44px; background:rgba(255,255,255,0.02); border-right:1px solid var(--border); display:flex; flex-direction:column; gap:2px; padding:6px 3px; flex-shrink:0; overflow-y:auto; }
+    .tabs button { writing-mode:vertical-lr; letter-spacing:1px; font-size:0.68rem; padding:8px 3px; border:1px solid transparent; border-radius:4px; background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; }
+    .tabs button:hover { background:rgba(34,211,238,0.04); color:var(--text); }
+    .tabs button.on { background:rgba(34,211,238,0.08); color:var(--accent); border-color:var(--border-glow); font-weight:600; }
+    .chart-area { flex:1; position:relative; }
+    #network { width:100%; height:100%; }
+    .detail { position:absolute; right:12px; top:12px; width:330px; max-height:calc(100% - 24px); background:rgba(8,14,36,0.95); border:1px solid var(--border); border-radius:10px; box-shadow:0 8px 30px rgba(0,0,0,0.5); padding:16px; overflow-y:auto; display:none; z-index:50; font-size:0.8rem; }
+    .detail.on { display:block; }
+    .detail .close { position:absolute; top:8px; right:12px; background:none; border:none; font-size:1.1rem; color:var(--muted); cursor:pointer; }
+    .detail h3 { font-size:0.92rem; color:var(--accent); margin-bottom:4px; line-height:1.35; }
+    .detail .meta { font-size:0.7rem; color:var(--muted); margin-bottom:8px; }
+    .detail .tags { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+    .detail .tags span { background:rgba(34,211,238,0.08); color:var(--accent); padding:2px 8px; border-radius:4px; font-size:0.68rem; }
+    .detail .btns { display:flex; gap:6px; margin-bottom:8px; }
+    .detail .btns a { background:var(--blue); color:#fff; padding:4px 10px; border-radius:4px; text-decoration:none; font-size:0.72rem; font-weight:600; }
+    .detail .summary { color:var(--muted); font-size:0.75rem; line-height:1.55; }
+    .detail .summary .en { color:var(--muted); font-size:0.7rem; margin-bottom:4px; font-style:italic; }
+    .tip { position:absolute; bottom:10px; left:12px; color:var(--muted); font-size:0.68rem; z-index:10; }
+    #bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5}
+  </style>
+</head>
+<body>
+<canvas id="bgParticles"></canvas>
+  <div class="topbar">
+    <h1>🧠 机器人柔性磨削知识库</h1>
+    <nav>
+      <a href="index.html" style="font-weight:700;color:var(--accent);border-color:var(--border-glow)">← 返回主页</a>
+      <span style="color:var(--muted);margin:0 4px">|</span>
+      <a href="d3_mindmap.html">🧠 D3径向</a>
+      <a href="mindmaps.html" class="on">📊 层级导图</a>
+      <a href="radial.html">🎯 ECharts径向</a>
+      <a href="galaxy.html">🌌 星系</a>
+    </nav>
+    <span class="info" id="infoBar">加载中…</span>
+  </div>
+
+  <div class="main">
+    <div class="tabs" id="tabs">
+      <button class="on" data-key="process_tree">工艺三级树</button>
+      <button data-key="process_domain">L1 工艺领域</button>
+      <button data-key="process_method">L2 工艺方式</button>
+      <button data-key="research_topic">L3 研究主题</button>
+      <button data-key="application">L4 应用场景</button>
+      <button data-key="material">L5 加工材料</button>
+    </div>
+    <div class="chart-area">
+      <div id="network"></div>
+      <div class="detail" id="detail">
+        <button class="close" id="closeDetail">✕</button>
+        <div id="detailContent"></div>
+      </div>
+      <div class="tip">🖱 滚轮缩放 · 拖拽平移 · <b>单击</b>分类展开/折叠 · <b>单击</b>论文看详情 · <b>双击</b>论文打开原文</div>
+    </div>
+  </div>
+
+  <script src="vis-network.min.js"></script>
+  <script src="mindmaps.js?v=3"></script>
+<script>
+// ═══════════ PARTICLE SYSTEM v2.0 ═══════════
+(function(){var c=document.getElementById("bgParticles"),ctx=c.getContext("2d"),pts=[],mx=0,my=0,tmx=0,tmy=0;function rs(){c.width=window.innerWidth;c.height=window.innerHeight}rs();window.addEventListener("resize",rs);document.addEventListener("mousemove",function(e){tmx=e.clientX;tmy=e.clientY});mx=window.innerWidth/2;my=window.innerHeight/2;tmx=mx;tmy=my;var pal=[{r:59,g:130,b:246,a:0.6},{r:99,g:102,b:241,a:0.5},{r:34,g:211,b:238,a:0.4},{r:37,g:99,b:235,a:0.45}];for(var i=0;i<100;i++){var col=pal[Math.floor(Math.random()*pal.length)];pts.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,r:Math.random()*1.3+0.2,col:col,ox:Math.random()*c.width,oy:Math.random()*c.height})}function dr(){mx+=(tmx-mx)*0.03;my+=(tmy-my)*0.03;ctx.clearRect(0,0,c.width,c.height);for(var i=0;i<pts.length;i++){var p=pts[i];var dxm=p.x-mx,dym=p.y-my,dm=Math.sqrt(dxm*dxm+dym*dym);var parallax=dm<300?(1-dm/300)*0.1:0;var nx=dm>0.1?dxm/dm:0,ny=dm>0.1?dym/dm:0;p.vx+=nx*parallax*0.02;p.vy+=ny*parallax*0.02;p.vx*=0.999;p.vy*=0.999;p.vx+=(p.ox-p.x)*0.00003;p.vy+=(p.oy-p.y)*0.00003;p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="rgba("+p.col.r+","+p.col.g+","+p.col.b+","+p.col.a+")";ctx.fill()}for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle="rgba(79,130,210,"+(0.03*(1-dist/100))+")";ctx.lineWidth=0.25;ctx.stroke()}}}requestAnimationFrame(dr)}dr()})();
+</script>
+</body>
+</html>
