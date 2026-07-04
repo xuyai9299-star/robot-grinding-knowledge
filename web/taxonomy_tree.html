@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>五层分类标签体系 — 机器人柔性磨削知识库</title>
+<style>
+:root {
+  --bg: #050B1F;
+  --card: rgba(255,255,255,0.03);
+  --text: #e8eaed;
+  --muted: #7c84a0;
+  --border: rgba(255,255,255,0.08);
+  --l1: #22D3EE;
+  --l2: #6366F1;
+  --l3: #2563EB;
+  --l4: #8B5CF6;
+  --l5: #F59E0B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* Header */
+.header{text-align:center;padding:40px 20px 10px}
+.header h1{font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;background:linear-gradient(135deg,var(--l1),var(--l2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header .sub{color:var(--muted);font-size:0.8rem;margin-top:6px}
+
+/* Tree */
+.tree-wrap{display:flex;justify-content:center;padding:20px 20px 60px}
+.tree{display:flex;flex-direction:column;align-items:center;gap:0}
+
+/* Level row */
+.level{display:flex;flex-direction:column;align-items:center;position:relative}
+.level-label{font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 12px;border-radius:10px;margin-bottom:10px;white-space:nowrap}
+.level-label.l1{background:rgba(34,211,238,0.1);color:var(--l1);border:1px solid rgba(34,211,238,0.25)}
+.level-label.l2{background:rgba(99,102,241,0.1);color:var(--l2);border:1px solid rgba(99,102,241,0.25)}
+.level-label.l3{background:rgba(37,99,235,0.1);color:var(--l3);border:1px solid rgba(37,99,235,0.25)}
+.level-label.l4{background:rgba(139,92,246,0.1);color:var(--l4);border:1px solid rgba(139,92,246,0.25)}
+.level-label.l5{background:rgba(245,158,11,0.1);color:var(--l5);border:1px solid rgba(245,158,11,0.25)}
+
+/* Connector lines */
+.connector{display:flex;flex-direction:column;align-items:center}
+.connector .vline{width:1px;height:24px;background:linear-gradient(180deg,var(--border),rgba(255,255,255,0.15))}
+.connector .hline-group{display:flex;align-items:flex-start}
+.connector .hwrap{display:flex;flex-direction:column;align-items:center}
+.connector .hwrap .hline{height:1px;background:linear-gradient(90deg,rgba(255,255,255,0.05),rgba(255,255,255,0.15),rgba(255,255,255,0.05))}
+.connector .hwrap .vdrop{width:1px;height:12px;background:rgba(255,255,255,0.12)}
+
+/* Node cards */
+.nodes{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-width:1100px}
+.node{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;transition:all 0.25s;text-align:center;min-width:80px;max-width:200px;position:relative}
+.node:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+.node .n-title{font-size:0.78rem;font-weight:600;line-height:1.3;margin-bottom:2px}
+.node .n-count{font-size:0.6rem;color:var(--muted)}
+.node .n-terms{font-size:0.58rem;color:var(--muted);margin-top:4px;line-height:1.4;display:none;max-width:180px}
+.node.expanded .n-terms{display:block}
+
+/* Level-specific node styles */
+.node.l1{border-color:rgba(34,211,238,0.25);min-width:140px}
+.node.l1:hover{border-color:rgba(34,211,238,0.5);box-shadow:0 0 16px rgba(34,211,238,0.15)}
+.node.l1 .n-title{color:var(--l1)}
+
+.node.l2{border-color:rgba(99,102,241,0.25)}
+.node.l2:hover{border-color:rgba(99,102,241,0.5);box-shadow:0 0 16px rgba(99,102,241,0.15)}
+.node.l2 .n-title{color:var(--l2)}
+
+.node.l3{border-color:rgba(37,99,235,0.25)}
+.node.l3:hover{border-color:rgba(37,99,235,0.5);box-shadow:0 0 16px rgba(37,99,235,0.15)}
+.node.l3 .n-title{color:var(--l3)}
+
+.node.l4{border-color:rgba(139,92,246,0.25)}
+.node.l4:hover{border-color:rgba(139,92,246,0.5);box-shadow:0 0 16px rgba(139,92,246,0.15)}
+.node.l4 .n-title{color:var(--l4)}
+
+.node.l5{border-color:rgba(245,158,11,0.25)}
+.node.l5:hover{border-color:rgba(245,158,11,0.5);box-shadow:0 0 16px rgba(245,158,11,0.15)}
+.node.l5 .n-title{color:var(--l5)}
+
+/* Stats bar */
+.stats-bar{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;padding:0 20px 30px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 16px;text-align:center}
+.stat .sv{font-size:1.2rem;font-weight:700}
+.stat .sl{font-size:0.65rem;color:var(--muted)}
+.stat.s1 .sv{color:var(--l1)}
+.stat.s2 .sv{color:var(--l2)}
+.stat.s3 .sv{color:var(--l3)}
+.stat.s4 .sv{color:var(--l4)}
+.stat.s5 .sv{color:var(--l5)}
+
+/* Footer */
+.footer{text-align:center;padding:20px;color:var(--muted);font-size:0.7rem}
+.footer a{color:var(--l1);text-decoration:none}
+
+@media(max-width:768px){
+  .node{min-width:60px;padding:8px 10px}
+  .node .n-title{font-size:0.7rem}
+  .nodes{gap:6px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>五层分类标签体系</h1>
+  <p class="sub">L1 工艺领域 → L2 工艺方式 → L3 研究主题 → L4 应用场景 → L5 加工材料</p>
+</div>
+
+<div class="stats-bar">
+  <div class="stat s1"><div class="sv">2</div><div class="sl">L1 工艺领域</div></div>
+  <div class="stat s2"><div class="sv">3</div><div class="sl">L2 工艺方式</div></div>
+  <div class="stat s3"><div class="sv">9</div><div class="sl">L3 研究主题</div></div>
+  <div class="stat s4"><div class="sv">6</div><div class="sl">L4 应用场景</div></div>
+  <div class="stat s5"><div class="sv">4</div><div class="sl">L5 加工材料</div></div>
+</div>
+
+<div class="tree-wrap">
+  <div class="tree" id="tree"></div>
+</div>
+
+<div class="footer">
+  点击节点展开查看关键词 · <a href="index.html">← 返回知识库首页</a>
+</div>
+
+<script>
+const TAXONOMY = {
+  L1: {
+    label: "L1 工艺领域",
+    cls: "l1",
+    items: {
+      "机器人磨削/抛光": ["机器人磨削", "机器人砂带磨削", "机器人抛光", "机器人柔性磨削", "robotic grinding", "robot belt grinding", "robotic polishing"],
+      "非机器人专用磨削": ["带式磨削", "砂带磨削", "CNC", "数控磨削", "belt grinding", "abrasive belt", "precision grinding"],
+    }
+  },
+  L2: {
+    label: "L2 工艺方式",
+    cls: "l2",
+    items: {
+      "砂带/带式磨削": ["砂带磨削", "带式磨削", "砂带", "belt grinding", "abrasive belt", "belt finishing"],
+      "抛光": ["抛光", "柔性抛光", "polishing", "finishing", "deburring", "derusting"],
+      "磁盘/其他磨削": ["磁盘磨削", "砂轮磨削", "disk grinding", "abrasive wheel", "grinding wheel"],
+    }
+  },
+  L3: {
+    label: "L3 研究主题",
+    cls: "l3",
+    items: {
+      "表面质量与完整性": ["表面粗糙度", "表面完整性", "表面形貌", "轮廓精度", "surface roughness", "surface integrity"],
+      "残余应力": ["残余应力", "residual stress"],
+      "材料去除与机理": ["材料去除率", "磨削力", "切削机理", "material removal", "grinding force", "chip thickness"],
+      "力/位控制": ["力控制", "力-位混合", "阻抗控制", "force control", "impedance control", "constant force"],
+      "轨迹与路径规划": ["轨迹规划", "路径规划", "刀位规划", "trajectory planning", "path planning", "tool path"],
+      "标定与测量": ["标定", "TCP标定", "在机测量", "点云配准", "calibration", "laser scanner"],
+      "状态监测与砂带磨损": ["状态监测", "砂带磨损", "声发射", "condition monitoring", "belt wear", "acoustic emission"],
+      "工艺优化与智能方法": ["工艺优化", "参数优化", "机器学习", "神经网络", "optimization", "deep learning"],
+      "建模与仿真": ["有限元", "数值模拟", "预测模型", "仿真", "simulation", "finite element", "digital twin"],
+    }
+  },
+  L4: {
+    label: "L4 应用场景",
+    cls: "l4",
+    items: {
+      "航空航天": ["航空发动机", "叶片", "涡轮", "整体叶盘", "aero-engine", "turbine blade", "blisk"],
+      "船舶/能源": ["船", "螺旋桨", "管道磨削", "marine", "propeller", "pipeline"],
+      "汽车/通用机械": ["汽车", "齿轮", "泵", "automotive", "gear", "bearing"],
+      "通用小零件/试件": ["试件", "薄壁件", "环形件", "test workpiece", "thin-walled", "complex surface"],
+      "增材/修复再制造": ["增材制造", "激光熔覆", "再制造", "additive manufacturing", "repair", "remanufacturing"],
+      "医学/手术": ["手术", "骨科", "牙科", "植入物", "surgery", "bone", "implant", "medical"],
+    }
+  },
+  L5: {
+    label: "L5 加工材料",
+    cls: "l5",
+    items: {
+      "钛合金": ["钛合金", "TC4", "TC17", "Ti-6Al-4V", "titanium alloy"],
+      "高温合金": ["高温合金", "GH4169", "Inconel", "镍基", "superalloy", "nickel-based"],
+      "陶瓷/复合材料": ["陶瓷", "氧化锆", "Cf/SiC", "复合材料", "ceramic", "zirconia", "composite"],
+      "钢/铁": ["钢", "铁", "20CrMnTi", "纯铁", "steel", "iron", "stainless steel"],
+    }
+  }
+};
+
+function buildTree() {
+  const tree = document.getElementById('tree');
+  const levels = Object.entries(TAXONOMY);
+
+  levels.forEach(([key, levelData], levelIdx) => {
+    const isLast = levelIdx === levels.length - 1;
+
+    // Level section
+    const levelDiv = document.createElement('div');
+    levelDiv.className = 'level';
+
+    // Level label
+    const label = document.createElement('div');
+    label.className = `level-label ${levelData.cls}`;
+    label.textContent = levelData.label;
+    levelDiv.appendChild(label);
+
+    // Nodes row
+    const nodesRow = document.createElement('div');
+    nodesRow.className = 'nodes';
+
+    const items = Object.entries(levelData.items);
+    items.forEach(([name, terms]) => {
+      const node = document.createElement('div');
+      node.className = `node ${levelData.cls}`;
+      node.innerHTML = `
+        <div class="n-title">${name}</div>
+        <div class="n-count">${terms.length} 关键词</div>
+        <div class="n-terms">${terms.slice(0,8).join(' · ')}${terms.length > 8 ? ' …' : ''}</div>
+      `;
+      node.addEventListener('click', function() {
+        this.classList.toggle('expanded');
+      });
+      nodesRow.appendChild(node);
+    });
+
+    levelDiv.appendChild(nodesRow);
+    tree.appendChild(levelDiv);
+
+    // Connector to next level
+    if (!isLast) {
+      const connector = document.createElement('div');
+      connector.className = 'connector';
+
+      const vline = document.createElement('div');
+      vline.className = 'vline';
+      connector.appendChild(vline);
+
+      // Horizontal bridge before dropping down
+      const hlineGroup = document.createElement('div');
+      hlineGroup.className = 'hline-group';
+
+      const hwrap = document.createElement('div');
+      hwrap.className = 'hwrap';
+
+      const hline = document.createElement('div');
+      hline.className = 'hline';
+      hline.style.width = '400px';
+      hwrap.appendChild(hline);
+
+      const vdrop = document.createElement('div');
+      vdrop.className = 'vdrop';
+      hwrap.appendChild(vdrop);
+
+      hlineGroup.appendChild(hwrap);
+      connector.appendChild(hlineGroup);
+
+      tree.appendChild(connector);
+    }
+  });
+}
+
+buildTree();
+</script>
+</body>
+</html>
